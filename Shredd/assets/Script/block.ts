@@ -22,11 +22,30 @@ export default class NewClass extends cc.Component {
     @property
     duration: number = 0.2;
 
+    @property
+    moveDistance: number = 400;
+
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {}
+    // onLoad () {}
 
     start () {
+    }
+
+    public moveRight(){
+
+    }
+
+    public moveLeft(){
+
+    }
+
+    public restoreFromRight(){
+
+    }
+
+    public restoreFromLeft(){
+
     }
 
     // update (dt) {}
