@@ -19,14 +19,12 @@ export default class NewClass extends cc.Component {
     @property
     text: string = 'hello';
 
-    @property
-    duration: number = 0.2;
-
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {}
+    // onLoad () {}
 
     start () {
+
     }
 
     // update (dt) {}
