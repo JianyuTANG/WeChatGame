@@ -25,6 +25,25 @@ export default class Block extends cc.Component {
     @property
     moveDistance: number = 200;
 
+    // 只在两个碰撞体开始接触时被调用一次
+   /* onBeginContact(contact, selfCollider, otherCollider) {
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
+       // cc.director.loadScene("Over");
+    }*/
+ 
+    // 只在两个碰撞体结束接触时被调用一次
+    onEndContact(contact, selfCollider, otherCollider) {
+        console.log("lllllllllllllllllllllll")
+        cc.director.loadScene("Over")
+    }/*,
+ 
+    // 每次将要处理碰撞体接触逻辑时被调用
+    onPreSolve: function (contact, selfCollider, otherCollider) {
+    },
+ 
+    // 每次处理完碰撞体接触逻辑时被调用
+    onPostSolve: function (contact, selfCollider, otherCollider) {
+    }*/
 
     // LIFE-CYCLE CALLBACKS:
 

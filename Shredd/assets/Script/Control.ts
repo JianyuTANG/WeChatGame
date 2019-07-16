@@ -43,6 +43,8 @@ export default class Control extends cc.Component {
         this.stateRight = 0;
         console.log(this.blockRight.getComponent('block').onLeftTouchStart)
         this.addEventListners();
+
+        //cc.director.getCollisionManager().enabled=true;
     }
 
     start() {
