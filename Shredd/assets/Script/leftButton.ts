@@ -21,10 +21,26 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    onLoad () {
+        this.addEventListners();
+    }
 
     start () {
 
+    }
+
+    private addEventListners(){
+        this.node.on(cc.Node.EventType.TOUCH_START, this.touchStart, this);
+        this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.touchEnd, this);
+        this.node.on(cc.Node.EventType.TOUCH_END, this.touchEnd, this);
+    }
+
+    private touchStart(){
+        this.node.dispatchEvent( new cc.Event.EventCustom('leftTouchStart', true) );
+    }
+
+    private touchEnd(){
+        this.node.dispatchEvent( new cc.Event.EventCustom('leftTouchEnd', true) );
     }
 
     // update (dt) {}
