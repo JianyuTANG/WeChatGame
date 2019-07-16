@@ -60,6 +60,8 @@ export default class Control extends cc.Component {
     }
 
     private leftTouchStart() {
+        if (this.stateLeft === 1)
+            return;
         this.stateLeft = 1;
         if (this.stateRight === 0) {
             this.blockLeft.getComponent('block').onLeftTouchStart();
@@ -84,6 +86,8 @@ export default class Control extends cc.Component {
     }
 
     private rightTouchStart() {
+        if (this.stateRight === 1)
+            return;
         this.stateRight = 1;
         if (this.stateLeft === 0) {
             this.blockRight.getComponent('block').onRightTouchStart();
