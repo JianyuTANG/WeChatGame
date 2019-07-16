@@ -60,8 +60,10 @@ export default class Control extends cc.Component {
     }
 
     private leftTouchStart() {
-        if (this.stateLeft === 1)
+        if (this.stateLeft >= 1) {
+            this.stateLeft += 1;
             return;
+        }
         this.stateLeft = 1;
         if (this.stateRight === 0) {
             this.blockLeft.getComponent('block').onLeftTouchStart();
@@ -74,6 +76,10 @@ export default class Control extends cc.Component {
     }
 
     private leftTouchEnd() {
+        if (this.stateLeft > 1) {
+            this.stateLeft -= 1;
+            return;
+        }
         this.stateLeft = 0;
         if (this.stateRight === 0) {
             this.blockRight.getComponent('block').onLeftTouchEnd();
@@ -86,8 +92,10 @@ export default class Control extends cc.Component {
     }
 
     private rightTouchStart() {
-        if (this.stateRight === 1)
+        if (this.stateRight >= 1) {
+            this.stateRight += 1;
             return;
+        }
         this.stateRight = 1;
         if (this.stateLeft === 0) {
             this.blockRight.getComponent('block').onRightTouchStart();
@@ -100,6 +108,10 @@ export default class Control extends cc.Component {
     }
 
     private rightTouchEnd() {
+        if (this.stateRight > 1) {
+            this.stateRight -= 1;
+            return;
+        }
         this.stateRight = 0;
         if (this.stateLeft === 0) {
             this.blockLeft.getComponent('block').onRightTouchEnd();
@@ -110,6 +122,7 @@ export default class Control extends cc.Component {
             this.blockRight.getComponent('block').onLeftTouchStart();
         }
     }
+
 
 
     // update (dt) {}
