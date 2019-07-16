@@ -49,7 +49,7 @@ export default class Block extends cc.Component {
 
     onLoad () {
         //this.addEventListners();
-        this.moveDistance = Math.floor(cc.view.getFrameSize().width/2 - 40);
+        this.moveDistance = Math.floor(cc.director.getWinSize().width/2 - 40);
     }
 
     start () {
