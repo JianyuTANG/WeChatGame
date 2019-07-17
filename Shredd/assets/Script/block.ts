@@ -8,9 +8,9 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
-var gameStatus=require('gameStatus')
+var gameStatus = require('gameStatus')
 
 @ccclass
 export default class Block extends cc.Component {
@@ -25,24 +25,24 @@ export default class Block extends cc.Component {
     duration: number = 0.2;
 
     //@property
-    moveDistance: number = Math.floor(cc.winSize.width/2);
+    moveDistance: number = Math.floor(cc.winSize.width / 2 - 40);
 
     @property(cc.Node)
-    obstacleNode: cc.Node=null
+    obstacleNode: cc.Node = null
 
     // 只在两个碰撞体开始接触时被调用一次
-   /* onBeginContact(contact, selfCollider, otherCollider) {
-        console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
-        cc.director.loadScene("Over");
-    }*/
- 
+    /* onBeginContact(contact, selfCollider, otherCollider) {
+         console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
+         cc.director.loadScene("Over");
+     }*/
+
     // 只在两个碰撞体结束接触时被调用一次
     onEndContact(contact, selfCollider, otherCollider) {
         console.log("lllllllllllllllllllllll")
         //获取当前成绩，写入全局变量中
-        let score=this.obstacleNode.getComponent("obstaclePool").blockNum-3;
-        if(score>0){
-           gameStatus.score=score;
+        let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 3;
+        if (score > 0) {
+            gameStatus.score = score;
         }
         cc.director.loadScene("Over")
     }/*,
@@ -57,40 +57,40 @@ export default class Block extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         //this.addEventListners();
         console.log(cc.winSize.height)
         console.log(this.moveDistance)
     }
 
-    start () {
+    start() {
     }
 
-    public moveRight(){
+    public moveRight() {
         return cc.moveBy(this.duration, cc.v2(this.moveDistance, 0)).easing(cc.easeCubicActionIn());
     }
 
-    public moveLeft(){
+    public moveLeft() {
         return cc.moveBy(this.duration, cc.v2(-this.moveDistance, 0)).easing(cc.easeCubicActionIn());
     }
 
-    public onLeftTouchStart(){
-        let __this=this;
+    public onLeftTouchStart() {
+        let __this = this;
         this.node.runAction(__this.moveLeft());
     }
 
-    public onLeftTouchEnd(){
-        let __this=this;
+    public onLeftTouchEnd() {
+        let __this = this;
         this.node.runAction(__this.moveRight());
     }
 
-    public onRightTouchStart(){
-        let __this=this;
+    public onRightTouchStart() {
+        let __this = this;
         this.node.runAction(__this.moveRight());
     }
 
-    public onRightTouchEnd(){
-        let __this=this;
+    public onRightTouchEnd() {
+        let __this = this;
         this.node.runAction(__this.moveLeft());
     }
 
