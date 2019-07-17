@@ -10,6 +10,8 @@
 
 const {ccclass, property} = cc._decorator;
 
+var gameStatus=require("../gameStatus")
+
 @ccclass
 export default class NewClass extends cc.Component {
 
@@ -19,17 +21,23 @@ export default class NewClass extends cc.Component {
     @property
     text: string = 'hello';
 
+    @property(cc.Node)
+    background: cc.Node=null
+
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        cc.director.getPhysicsManager().enabled=true;
-        //cc.director.getCollisionManager().enabled=true;
+        var ratioWidth = cc.winSize.width / 750;
+        var ratioHeight = cc.winSize.height / 1334;
+        this.background.width = cc.winSize.width;
+        this.background.height = cc.winSize.height;
+        console.log(gameStatus.score);
+        this.label.getComponent(cc.Label).string=gameStatus.score.toString();
     }
 
     start () {
 
     }
 
-    update (dt) {
-    }
+    // update (dt) {}
 }
