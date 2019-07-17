@@ -10,6 +10,8 @@
 
 const {ccclass, property} = cc._decorator;
 
+var gameStatus=require('gameStatus')
+
 @ccclass
 export default class Block extends cc.Component {
 
@@ -22,18 +24,26 @@ export default class Block extends cc.Component {
     @property
     duration: number = 0.2;
 
-    @property
-    moveDistance: number = 200;
+    //@property
+    moveDistance: number = Math.floor(cc.winSize.width/2);
+
+    @property(cc.Node)
+    obstacleNode: cc.Node=null
 
     // 只在两个碰撞体开始接触时被调用一次
    /* onBeginContact(contact, selfCollider, otherCollider) {
         console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
-       // cc.director.loadScene("Over");
+        cc.director.loadScene("Over");
     }*/
  
     // 只在两个碰撞体结束接触时被调用一次
     onEndContact(contact, selfCollider, otherCollider) {
         console.log("lllllllllllllllllllllll")
+        //获取当前成绩，写入全局变量中
+        let score=this.obstacleNode.getComponent("obstaclePool").blockNum-3;
+        if(score>0){
+           gameStatus.score=score;
+        }
         cc.director.loadScene("Over")
     }/*,
  
@@ -49,7 +59,8 @@ export default class Block extends cc.Component {
 
     onLoad () {
         //this.addEventListners();
-        this.moveDistance = Math.floor(cc.director.getWinSize().width/2 - 40);
+        console.log(cc.winSize.height)
+        console.log(this.moveDistance)
     }
 
     start () {

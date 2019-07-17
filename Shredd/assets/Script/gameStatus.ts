@@ -8,7 +8,7 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const {ccclass, property} = cc._decorator;
+/*const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
@@ -19,13 +19,15 @@ export default class NewClass extends cc.Component {
     @property
     text: string = 'hello';
 
-
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+   // onLoad () {}
 
-    start () {
-    }
+    //start () {}
 
     // update (dt) {}
+}*/
+
+module.exports={
+    score: 0
 }
