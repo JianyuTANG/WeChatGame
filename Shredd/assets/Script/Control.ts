@@ -41,7 +41,10 @@ export default class Control extends cc.Component {
         this.blockLeft = cc.find("Canvas/blockLeft");
         this.stateLeft = 0;
         this.stateRight = 0;
-        console.log(this.blockRight.getComponent('block').onLeftTouchStart)
+        //console.log(this.blockRight.getComponent('block').onLeftTouchStart)
+        //this.blockRight.getComponent('block').moveDistance=Math.floor((cc.winSize.width / 2) - 40);
+        //this.blockLeft.getComponent('block').moveDistance=Math.floor((cc.winSize.width / 2) - 40);
+        console.log(this.blockLeft.getComponent('block').moveDistance)
         this.addEventListners();
 
         //cc.director.getCollisionManager().enabled=true;

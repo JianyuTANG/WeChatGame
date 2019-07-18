@@ -44,7 +44,10 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {}
+    onLoad () {
+        this.far_bg[0].width=cc.winSize.width;
+        this.far_bg[1].width=cc.winSize.width;
+    }
 
     start() {
 

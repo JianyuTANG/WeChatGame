@@ -25,7 +25,7 @@ export default class Block extends cc.Component {
     duration: number = 0.2;
 
     //@property
-    moveDistance: number = Math.floor(cc.winSize.width / 2 - 40);
+    moveDistance: number = Math.floor((cc.winSize.width / 2) - 30);
 
     @property(cc.Node)
     obstacleNode: cc.Node = null
@@ -58,12 +58,13 @@ export default class Block extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        //this.addEventListners();
-        console.log(cc.winSize.height)
-        console.log(this.moveDistance)
+        //this.moveDistance=Math.floor((cc.winSize.width / 2) - 40);
+        console.log(cc.winSize.width)
+        //console.log(this.moveDistance)
     }
 
     start() {
+        //this.moveDistance=Math.floor((cc.winSize.width / 2) - 40);
     }
 
     public moveRight() {

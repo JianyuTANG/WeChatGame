@@ -46,6 +46,7 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        console.log(cc.winSize.width);
         this.ratioWidth = cc.winSize.width / 750;
         this.ratioHeight = cc.winSize.height / 1334;
         this.background = cc.find('Canvas/newbg');

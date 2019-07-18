@@ -40,6 +40,7 @@ export default class NewClass extends cc.Component {
         this.scoreBoard.height = 120 * ratioHeight;
         this.scoreBoard.x = -167 * ratioWidth;
         this.scoreBoard.y = -54 * ratioHeight;
+        console.log(cc.winSize.width)
         console.log(gameStatus.score);
         this.label.getComponent(cc.Label).string = gameStatus.score.toString();
     }
