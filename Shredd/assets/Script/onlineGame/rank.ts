@@ -8,10 +8,10 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
-/*const {ccclass, property} = cc._decorator;
+const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class rank extends cc.Component {
 
     @property(cc.Label)
     label: cc.Label = null;
@@ -21,14 +21,26 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-   // onLoad () {}
+    // onLoad () {}
 
-    //start () {}
+    start () {
+
+    }
+
+    public submitScore(myScore:number){
+        window.wx.postMessage({
+            requestType: 'submit',
+            dataType: 'score',
+            score: myScore,
+        })
+    }
+
+    public getRank(){
+        window.wx.postMessage({
+            requestType: 'getrank',
+            dataType: 'score',
+        })
+    }
 
     // update (dt) {}
-}*/
-
-module.exports={
-    score: 0,
-    online: false,//false为单机，true为对战模式
 }

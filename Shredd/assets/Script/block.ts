@@ -30,6 +30,9 @@ export default class Block extends cc.Component {
     @property(cc.Node)
     obstacleNode: cc.Node = null
 
+    @property(cc.Node)
+    onlineController: cc.Node = null
+
     // 只在两个碰撞体开始接触时被调用一次
     /* onBeginContact(contact, selfCollider, otherCollider) {
          console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -44,7 +47,13 @@ export default class Block extends cc.Component {
         if (score > 0) {
             gameStatus.score = score;
         }
-        cc.director.loadScene("Over")
+        if (gameStatus.online === true) {
+            this.onlineController = cc.find('onlineController');
+            const online = this.onlineController.getComponent('online');
+            online.gameOver();
+        }
+        cc.director.loadScene("Over");
+
     }/*,
  
     // 每次将要处理碰撞体接触逻辑时被调用
@@ -64,7 +73,6 @@ export default class Block extends cc.Component {
     }
 
     start() {
-        //this.moveDistance=Math.floor((cc.winSize.width / 2) - 40);
     }
 
     public moveRight() {

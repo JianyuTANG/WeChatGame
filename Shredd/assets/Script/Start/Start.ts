@@ -46,6 +46,7 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        cc.find('Canvas/connectBoard').active=false;
         console.log(cc.winSize.width);
         this.ratioWidth = cc.winSize.width / 750;
         this.ratioHeight = cc.winSize.height / 1334;

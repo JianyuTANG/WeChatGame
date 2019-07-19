@@ -56,7 +56,7 @@ queue.socket = io.of('/queue');
 queue.socket.on('connection', function (socket) {
     let roomId = getFreeRoom();
     if (roomId != -1) {
-        queue.socket.to(socket.id).emit('findroom', roomId);
+        queue.socket.to(socket.id).emit('findroom', {'roomId': roomId});
     }
     else {
         queue.socket.emit('reject', -1);
@@ -69,14 +69,15 @@ for (let i = 0; i < MAX; i++) {
     rooms[i].socket.on('connection', function (socket) {
         rooms[i].people++;
         if (rooms[i].people === 2) {
-            rooms[i].socket.emit('start', 1);
+            rooms[i].socket.to(socket.id).emit('playerNum', {'num':1});
             rooms[i].aStatus = 0;
             rooms[i].bStatus = 0;
             rooms[i].aPoint = 0;
             rooms[i].bPoint = 0;
+            rooms[i].socket.emit('start');
         }
         else if (rooms[i].people === 1) {
-            rooms[i].socket.to(socket.id).emit('start', 0);
+            rooms[i].socket.to(socket.id).emit('playerNum', {'num':0});
             rooms[i].firstUserId = socket.id;
         }
         //对得分的响应（记录）
@@ -91,13 +92,25 @@ for (let i = 0; i < MAX; i++) {
             if (socket.id === rooms[i].firstUserId) {
                 rooms[i].aPoint = data.point;
                 rooms[i].aStatus = 1;
+                if (rooms[i].bStatus === 0) {
+                    rooms[i].socket.to(socket.id).emit('status', { 'status': 3 });
+                }
+                else {
+                    rooms[i].socket.emit('status', { 'status': 2 });
+                }
             }
             else {
                 rooms[i].bPoint = data.point;
                 rooms[i].bStatus = 1;
+                if (rooms[i].aStatus === 0) {
+                    rooms[i].socket.to(socket.id).emit('status', { 'status': 3 });
+                }
+                else {
+                    rooms[i].socket.emit('status', { 'status': 2 });
+                }
             }
             if (rooms[i].aStatus === 1 && rooms[i].aStatus === 1) {
-                rooms[i].socket.emit({ "playerA": rooms[i].aPoint, "playerB": rooms[i].bPoint });
+                rooms[i].socket.emit('end', { "playerA": rooms[i].aPoint, "playerB": rooms[i].bPoint });
             }
         })
 
