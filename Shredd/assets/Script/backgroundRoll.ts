@@ -10,6 +10,8 @@
 
 const { ccclass, property } = cc._decorator;
 
+var gameStatus = require('gameStatus')
+
 @ccclass
 export default class NewClass extends cc.Component {
 
@@ -23,7 +25,7 @@ export default class NewClass extends cc.Component {
     far_bg: [cc.Node] = [null]  //用于管理背景图片结点的数组,记得回cocos面板中添加数组的结点数量
 
     @property(Number)
-    bg_speed: Number=0.6   //移动时控制速度的变量
+    bg_speed: Number = 0.2   //移动时控制速度的变量
 
     bgMove(bgList, speed) {
         //每次循环二张图片一起滚动
@@ -44,9 +46,12 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
-        this.far_bg[0].width=cc.winSize.width;
-        this.far_bg[1].width=cc.winSize.width;
+    onLoad() {
+        // this.far_bg.push(cc.find("Canvas/background"));
+        //  this.far_bg.push(cc.find("Canvas/backgroundForRoll"))
+        for (let i in this.far_bg) {
+            //this.far_bg[i].width = cc.winSize.width;
+        }
     }
 
     start() {
@@ -55,6 +60,8 @@ export default class NewClass extends cc.Component {
 
     update(dt) {
         //console.log("moveeeeeeeeeeeeeee")
-        this.bgMove(this.far_bg, this.bg_speed);
+        if (gameStatus.status === 'on') {
+            this.bgMove(this.far_bg, this.bg_speed);
+        }
     }
 }

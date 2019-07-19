@@ -29,5 +29,6 @@ export default class NewClass extends cc.Component {
 }*/
 
 module.exports={
-    score: 0
+    score: 0,
+    status: "on"  //游戏状态有on, pause, over
 }

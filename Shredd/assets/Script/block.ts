@@ -12,6 +12,8 @@ const { ccclass, property } = cc._decorator;
 
 var gameStatus = require('gameStatus')
 
+import  {Shake}  from './shake';
+
 @ccclass
 export default class Block extends cc.Component {
 
@@ -25,27 +27,46 @@ export default class Block extends cc.Component {
     duration: number = 0.2;
 
     //@property
-    moveDistance: number = Math.floor((cc.winSize.width / 2) - 30);
+    moveDistance: number = Math.floor((cc.winSize.width / 2) - 20);
 
     @property(cc.Node)
     obstacleNode: cc.Node = null
 
     // 只在两个碰撞体开始接触时被调用一次
-    /* onBeginContact(contact, selfCollider, otherCollider) {
+     onBeginContact(contact, selfCollider, otherCollider) {
+         console.log(otherCollider.node.name)
+        if (otherCollider.node.name === 'blueBonus') {
+            console.log("oooooooooooooooooooo")
+            /*let shake: Shake = Shake.create(0.5, 0, 10);
+            this.node.runAction(shake);*/
+        }else{
          console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
-         cc.director.loadScene("Over");
-     }*/
+         let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 2;
+            if (score > 0) {
+                gameStatus.score = score;
+            }
+         gameStatus.status = 'over'
+         this.node.dispatchEvent( new cc.Event.EventCustom('setPause', true) );
+        // cc.director.loadScene("Over");
+        }
+     }
 
     // 只在两个碰撞体结束接触时被调用一次
-    onEndContact(contact, selfCollider, otherCollider) {
-        console.log("lllllllllllllllllllllll")
-        //获取当前成绩，写入全局变量中
-        let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 3;
-        if (score > 0) {
-            gameStatus.score = score;
+   /* onEndContact(contact, selfCollider, otherCollider) {
+        if (otherCollider.getComponent('blueBonus') !== null) {
+            let shake: Shake = Shake.create(1, 20, 10);
+            this.node.runAction(shake);
+        } else {
+            console.log("lllllllllllllllllllllll")
+            //获取当前成绩，写入全局变量中
+            let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 2;
+            if (score > 0) {
+                gameStatus.score = score;
+            }
+            gameStatus.status = 'over'
         }
-        cc.director.loadScene("Over")
-    }/*,
+        // cc.director.loadScene("Over")
+    }*//*,
  
     // 每次将要处理碰撞体接触逻辑时被调用
     onPreSolve: function (contact, selfCollider, otherCollider) {

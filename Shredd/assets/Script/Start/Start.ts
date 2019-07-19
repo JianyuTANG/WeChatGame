@@ -10,6 +10,8 @@
 
 const { ccclass, property } = cc._decorator;
 
+var gameStatus = require("../gameStatus")
+
 @ccclass
 export default class NewClass extends cc.Component {
 
@@ -88,6 +90,7 @@ export default class NewClass extends cc.Component {
 
     public gameStart() {
         cc.director.loadScene('Game');
+        gameStatus.status='on';
     }
 
     // update (dt) {}
