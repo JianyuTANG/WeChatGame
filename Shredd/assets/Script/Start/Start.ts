@@ -48,7 +48,8 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        cc.find('Canvas/connectBoard').active=false;
+        cc.game.removePersistRootNode(cc.find('onlineController'));
+        cc.find('Canvas/connectBoard').active = false;
         console.log(cc.winSize.width);
         this.ratioWidth = cc.winSize.width / 750;
         this.ratioHeight = cc.winSize.height / 1334;
@@ -91,7 +92,7 @@ export default class NewClass extends cc.Component {
 
     public gameStart() {
         cc.director.loadScene('Game');
-        gameStatus.status='on';
+        gameStatus.status = 'on';
     }
 
     // update (dt) {}

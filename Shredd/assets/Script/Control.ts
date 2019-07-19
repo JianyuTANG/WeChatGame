@@ -164,6 +164,11 @@ export default class Control extends cc.Component {
 
             //20帧过后加载结束界面
             if(this.counter===20){
+                if (gameStatus.online === true) {
+                    const onlineController = cc.find('onlineController');
+                    let online = onlineController.getComponent('online');
+                    online.gameOver();
+                }
                 cc.director.loadScene("Over");
             }
         }
