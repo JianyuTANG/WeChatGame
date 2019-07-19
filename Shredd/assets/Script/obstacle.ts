@@ -21,6 +21,10 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
+    setPause(){
+        this.node.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,0);
+    }
+
     onLoad () {
         cc.director.getPhysicsManager().enabled=true;
         //cc.director.getCollisionManager().enabled=true;
@@ -30,6 +34,5 @@ export default class NewClass extends cc.Component {
 
     }
 
-    update (dt) {
-    }
+    //update (dt) {   }
 }

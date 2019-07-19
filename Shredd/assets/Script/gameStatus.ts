@@ -31,4 +31,5 @@ export default class NewClass extends cc.Component {
 module.exports={
     score: 0,
     online: false,//false为单机，true为对战模式
+    status: "on"  //游戏状态有on, pause, over
 }

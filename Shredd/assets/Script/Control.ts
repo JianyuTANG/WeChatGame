@@ -13,6 +13,10 @@
 
 const { ccclass, property } = cc._decorator;
 
+var gameStatus = require('gameStatus')
+
+import  {Shake}  from './shake';
+
 @ccclass
 export default class Control extends cc.Component {
 
@@ -34,7 +38,25 @@ export default class Control extends cc.Component {
     @property
     stateLeft: number = 0;
 
+    @property(cc.Node)
+    obstacleNode: cc.Node=null
+
+    @property(cc.Node)
+    rightButton: cc.Node=null
+
+    @property(cc.Node)
+    leftButton: cc.Node=null
+
+    counter: number = 0;
+
     // LIFE-CYCLE CALLBACKS:
+
+    setPause(){
+        this.obstacleNode.getComponent('obstaclePool').setPause();
+        //控制面板使不激活
+        this.rightButton.active=false;
+        this.leftButton.active=false;
+    }
 
     onLoad() {
         this.blockRight = cc.find("Canvas/blockRight");
@@ -60,6 +82,8 @@ export default class Control extends cc.Component {
 
         this.node.on('rightTouchStart', this.rightTouchStart, this);
         this.node.on('rightTouchEnd', this.rightTouchEnd, this);
+
+        this.node.on('setPause', this.setPause, this);
     }
 
     private leftTouchStart() {
@@ -128,5 +152,20 @@ export default class Control extends cc.Component {
 
 
 
-    // update (dt) {}
+    update (dt) {
+        console.log(gameStatus.status)
+        if(gameStatus.status==='pause'){
+            this.setPause();
+        }else if(gameStatus.status==='over'){
+            //生成撞击抖动效果
+            let shake: Shake = Shake.create(0.5, 0, 10);
+            this.node.runAction(shake); 
+            this.counter++; 
+
+            //20帧过后加载结束界面
+            if(this.counter===20){
+                cc.director.loadScene("Over");
+            }
+        }
+    }
 }
