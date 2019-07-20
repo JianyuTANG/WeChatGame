@@ -10,6 +10,7 @@
 
 const { ccclass, property } = cc._decorator;
 let gameStatus = require("../gameStatus")
+let io = require('socket.io')
 
 @ccclass
 export default class NewClass extends cc.Component {
@@ -20,8 +21,8 @@ export default class NewClass extends cc.Component {
     @property
     text: string = 'hello';
 
-    @property
-    io = (window as any).io || {};
+    //@property
+    //io = (window as any).io || {};
 
     @property
     roomIo = null;
@@ -47,6 +48,7 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        cc.game.addPersistRootNode(this.node);
         this.connectBoard = cc.find('Canvas/connectBoard');
         this.connectBoardLabel = cc.find('Canvas/connectBoard/Label')
     }
@@ -56,69 +58,79 @@ export default class NewClass extends cc.Component {
     }
 
     public startOnlineMatching() {
+        console.log(999)
+        this.init();
         this.connectBoard.active = true;
         this.enterQueue();
     }
 
     public cancellMatching() {
         this.connectBoard.active = false;
-        this.queueIo.close();
+        this.queueIo.disconnect();
         if (this.roomIo != null)
             this.roomIo.disconnect();
     }
 
-    public gameOver(){
+    public gameOver() {
         this.roomIo.emit('gameEnd', { 'point': gameStatus.score });
+        /*
         this.roomIo.on('status', data => {
             this.connectionStatus = data.status;
         })
+        */
+    }
+
+    private init() {
+        this.queueIo = null;
+        this.roomIo = null;
+        this.connectionStatus = 0;
+        this.playerNum = -1;
+        this.rivalScore = 0;
     }
 
     private enterQueue() {
-        this.queueIo = this.io.connect('http://152.136.192.32:8500/queue', { 'reconnection': false });
-        let roomId=-1;
-        this.queueIo.on('connection',socket=>{
-            socket.on('findroom',data=>{
-                roomId=data.roomID;
-                this.enterRoom(roomId);
-                this.queueIo.disconnect();
-            })
-            socket.on('reject',()=>{
-                this.connectionStatus = -1;
-                alert('服务器已满，请等候一会儿再进入！');
-                this.connectBoard.active = false;
-                this.queueIo.disconnect();
-            })
-        })
+        this.queueIo = io.connect('http://152.136.192.32:8500/queue', { 'reconnection': false });
+        let roomId = -1;
+        this.queueIo.on('findroom', data => {
+            roomId = data.roomId;
+            console.log(data.roomId);
+            this.enterRoom(roomId);
+            this.queueIo.disconnect();
+        });
+        this.queueIo.on('reject', () => {
+            this.connectionStatus = -1;
+            alert('服务器已满，请等候一会儿再进入！');
+            this.connectBoard.active = false;
+            this.queueIo.disconnect();
+        });
     }
 
-    private enterRoom(roomId){
-        this.roomIo=this.io.connect(`http://152.136.192.32:8500/room${roomId}`, { 'reconnection': false });
-        this.roomIo.on('connection',socket=>{
-            socket.on('playerNum',data=>{
-                this.playerNum=data.num;
-                if(this.playerNum===0){
-                    this.connectBoardLabel.getComponent('Label').string = '正在匹配旗鼓相当的对手!';
-                }
-                else{
-                    this.connectBoardLabel.getComponent('Label').string = '即将开始!';
-                }
-            });
-            socket.on('start',()=>{
-                this.connectBoardLabel.getComponent('Label').string = '即将开始!';
-                gameStatus.online = true;
-                cc.director.loadScene('Game');
-            });
-            socket.on('end',data=>{
-                if(this.playerNum===0){
-                    this.rivalScore=data.playerB;
-                }
-                else{
-                    this.rivalScore=data.playerA;
-                }
-                this.roomIo.disconnect();
-            });
-        })
+    private enterRoom(roomId) {
+        this.roomIo = io.connect(`http://152.136.192.32:8500/room${roomId}`, { 'reconnection': false });
+        this.roomIo.on('playerNum', data => {
+            this.playerNum = data.num;
+            if (this.playerNum === 0) {
+                this.connectBoardLabel.getComponent(cc.Label).string = '正在匹配旗鼓相当的对手!';
+            }
+            else {
+                this.connectBoardLabel.getComponent(cc.Label).string = '即将开始!';
+            }
+        });
+        this.roomIo.on('start', () => {
+            this.connectBoardLabel.getComponent(cc.Label).string = '即将开始!';
+            gameStatus.online = true;
+            cc.director.loadScene('Game');
+        });
+        this.roomIo.on('end', data => {
+            if (this.playerNum === 0) {
+                this.rivalScore = data.playerB;
+            }
+            else {
+                this.rivalScore = data.playerA;
+            }
+            this.connectionStatus = 2;
+            this.roomIo.disconnect();
+        });
     }
 
     // update (dt) {}

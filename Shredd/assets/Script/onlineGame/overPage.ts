@@ -38,14 +38,29 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     button: cc.Node = null;
 
+    @property
+    onlineController = null;
+
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
         this.matchScreen();
+        this.onlineController = cc.find('onlineController').getComponent('onlineControl');
+        this.onlineController.gameOver();
+        this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
+        if (this.onlineController.connectionStatus === 2) {
+            this.showMatchResult();
+            this.onlineController.connectionStatus = 0;
+        }
+        else {
+            //显示等待对手
+        }
     }
 
     start() {
-        this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
+        // this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
+
+
     }
 
     private matchScreen() { //屏幕适配
@@ -82,23 +97,29 @@ export default class NewClass extends cc.Component {
     }
 
     private showMatchResult() {
-        const onlineController = cc.find('onlineController').getComponent('onlineControl');
-        if (onlineController.rivalScore > gameStatus.score) {
+        //隐藏等待提示
+        if (this.onlineController.rivalScore > gameStatus.score) {
             this.lose.active = true;
         }
-        else if (onlineController.rivalScore < gameStatus.score) {
+        else if (this.onlineController.rivalScore < gameStatus.score) {
             this.win.active = true;
         }
         else {
             //平局
         }
         //this.selfScore.getComponent(cc.Label).string=gameStatus.score.toString();
-        this.rivalScore.getComponent(cc.Label).string = onlineController.rivalScore.toString();
+        this.rivalScore.getComponent(cc.Label).string = this.onlineController.rivalScore.toString();
     }
 
     public goBack() {
+        gameStatus.online = false;
         cc.director.loadScene('Start');
     }
 
-    // update (dt) {}
+    update(dt) {
+        if (this.onlineController.connectionStatus === 2) {
+            this.showMatchResult();
+            this.onlineController.connectionStatus = 0;
+        }
+    }
 }

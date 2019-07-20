@@ -15,7 +15,7 @@ const { ccclass, property } = cc._decorator;
 
 var gameStatus = require('gameStatus')
 
-import  {Shake}  from './shake';
+import { Shake } from './shake';
 
 @ccclass
 export default class Control extends cc.Component {
@@ -39,23 +39,23 @@ export default class Control extends cc.Component {
     stateLeft: number = 0;
 
     @property(cc.Node)
-    obstacleNode: cc.Node=null
+    obstacleNode: cc.Node = null
 
     @property(cc.Node)
-    rightButton: cc.Node=null
+    rightButton: cc.Node = null
 
     @property(cc.Node)
-    leftButton: cc.Node=null
+    leftButton: cc.Node = null
 
     counter: number = 0;
 
     // LIFE-CYCLE CALLBACKS:
 
-    setPause(){
+    setPause() {
         this.obstacleNode.getComponent('obstaclePool').setPause();
         //控制面板使不激活
-        this.rightButton.active=false;
-        this.leftButton.active=false;
+        this.rightButton.active = false;
+        this.leftButton.active = false;
     }
 
     onLoad() {
@@ -152,24 +152,24 @@ export default class Control extends cc.Component {
 
 
 
-    update (dt) {
+    update(dt) {
         console.log(gameStatus.status)
-        if(gameStatus.status==='pause'){
+        if (gameStatus.status === 'pause') {
             this.setPause();
-        }else if(gameStatus.status==='over'){
+        } else if (gameStatus.status === 'over') {
             //生成撞击抖动效果
             let shake: Shake = Shake.create(0.5, 0, 10);
-            this.node.runAction(shake); 
-            this.counter++; 
+            this.node.runAction(shake);
+            this.counter++;
 
             //20帧过后加载结束界面
-            if(this.counter===20){
+            if (this.counter === 20) {
                 if (gameStatus.online === true) {
-                    const onlineController = cc.find('onlineController');
-                    let online = onlineController.getComponent('online');
-                    online.gameOver();
+                    cc.director.loadScene('onlineOver');
                 }
-                cc.director.loadScene("Over");
+                else {
+                    cc.director.loadScene("Over");
+                }
             }
         }
     }

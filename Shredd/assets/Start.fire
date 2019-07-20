@@ -44,8 +44,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.1483336587252373,
-      "y": 0.1483336587252373,
+      "x": 0.34078125953674315,
+      "y": 0.34078125953674315,
       "z": 1
     },
     "_quat": {
@@ -957,7 +957,6 @@
     "_enabled": true,
     "label": null,
     "text": "hello",
-    "io": {},
     "roomIo": null,
     "queueIo": null,
     "connectionStatus": 0,

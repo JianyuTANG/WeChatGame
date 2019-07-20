@@ -1,7 +1,7 @@
-const express = require('express')
-let app = express()
-const server = require('http').server(app)
-const io = require('socket.io')(server)
+let express = require('express');
+let app = express();
+let server = require('http').Server(app);
+let io = require('socket.io')(server);
 
 
 
@@ -12,7 +12,7 @@ class Queue {
         this.people = 0;
         this.socket = null;
     }
-}
+};
 
 class Room {
     constructor() {
@@ -24,7 +24,7 @@ class Room {
         this.bStatus = -1;
         this.firstUserId = '';
     }
-}
+};
 
 let rooms = [];
 let queue = new Queue();
@@ -36,7 +36,7 @@ io.on('connection', function (socket) {
         io.people--;
         console.log('diconnected');
     })
-})
+});
 
 function getFreeRoom() {
     let freeRoomId = -1;
@@ -56,20 +56,23 @@ queue.socket = io.of('/queue');
 queue.socket.on('connection', function (socket) {
     let roomId = getFreeRoom();
     if (roomId != -1) {
-        queue.socket.to(socket.id).emit('findroom', {'roomId': roomId});
+        console.log(socket.id)
+        queue.socket.to(socket.id).emit('findroom', { 'roomId': roomId });
+        console.log('enter queue');
     }
     else {
         queue.socket.emit('reject', -1);
     }
-})
+});
 
 for (let i = 0; i < MAX; i++) {
     rooms[i] = new Room();
     rooms[i].socket = io.of(`/room${i}`);
     rooms[i].socket.on('connection', function (socket) {
+        console.log('enter room');
         rooms[i].people++;
         if (rooms[i].people === 2) {
-            rooms[i].socket.to(socket.id).emit('playerNum', {'num':1});
+            rooms[i].socket.to(socket.id).emit('playerNum', { 'num': 1 });
             rooms[i].aStatus = 0;
             rooms[i].bStatus = 0;
             rooms[i].aPoint = 0;
@@ -77,54 +80,44 @@ for (let i = 0; i < MAX; i++) {
             rooms[i].socket.emit('start');
         }
         else if (rooms[i].people === 1) {
-            rooms[i].socket.to(socket.id).emit('playerNum', {'num':0});
+            rooms[i].socket.to(socket.id).emit('playerNum', { 'num': 0 });
             rooms[i].firstUserId = socket.id;
         }
         //对得分的响应（记录）
         socket.on('gainpoint1', function () {
             rooms[i].bPoint++;
-        })
+        });
         socket.on('gainpoint0', function () {
             rooms[i].aPoint++;
-        })
+        });
         //对游戏结束的响应
         socket.on('gameEnd', function (data) {
             if (socket.id === rooms[i].firstUserId) {
                 rooms[i].aPoint = data.point;
                 rooms[i].aStatus = 1;
-                if (rooms[i].bStatus === 0) {
-                    rooms[i].socket.to(socket.id).emit('status', { 'status': 3 });
-                }
-                else {
-                    rooms[i].socket.emit('status', { 'status': 2 });
-                }
             }
             else {
                 rooms[i].bPoint = data.point;
                 rooms[i].bStatus = 1;
-                if (rooms[i].aStatus === 0) {
-                    rooms[i].socket.to(socket.id).emit('status', { 'status': 3 });
-                }
-                else {
-                    rooms[i].socket.emit('status', { 'status': 2 });
-                }
             }
-            if (rooms[i].aStatus === 1 && rooms[i].aStatus === 1) {
+            if (rooms[i].aStatus === 1 && rooms[i].bStatus === 1) {
                 rooms[i].socket.emit('end', { "playerA": rooms[i].aPoint, "playerB": rooms[i].bPoint });
             }
-        })
+        });
 
         socket.on('disconnect', function () {
-            rooms[i].aStatus = 0;
-            rooms[i].bStatus = 0;
-            rooms[i].aPoint = 0;
-            rooms[i].bPoint = 0;
-            rooms[i].people = 0;
-        })
+            rooms[i].people--;
+            if (rooms[i].people === 0) {
+                rooms[i].aStatus = 0;
+                rooms[i].bStatus = 0;
+                rooms[i].aPoint = 0;
+                rooms[i].bPoint = 0;
+            }
+        });
     })
 }
 
 
-server.listening(8500, function () {
+server.listen(8500, function () {
     console.log('listening 8500!')
-})
+});
