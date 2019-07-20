@@ -46,6 +46,7 @@ export default class NewClass extends cc.Component {
     onLoad() {
         this.matchScreen();
         this.onlineController = cc.find('onlineController').getComponent('onlineControl');
+        cc.find('onlineController').getComponent('rank').submitScore();
         this.onlineController.gameOver();
         this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
         if (this.onlineController.connectionStatus === 2) {

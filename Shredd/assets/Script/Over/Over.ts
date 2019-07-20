@@ -37,6 +37,7 @@ export default class NewClass extends cc.Component {
     counter=0;
 
     onLoad() {
+        cc.find('onlineController').getComponent('rank').submitScore();
         const ratioWidth = cc.winSize.width / 750;
         const ratioHeight = cc.winSize.height / 1334;
         this.background = cc.find('Canvas/overPage');
