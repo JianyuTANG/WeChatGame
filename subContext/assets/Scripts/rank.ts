@@ -109,16 +109,15 @@ export default class item extends cc.Component {
     public initUserItem(position: number, data) {
         let node = cc.instantiate(this.rankItem);
         node.parent = this.content;
-        let layout=node.getChildByName('layout');
-        layout.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名词
-        layout.getChildByName('name').getComponent(cc.Label).string = data.nickName || data.nickname;//昵称
-        layout.getChildByName('score').getComponent(cc.Label).string = '0';
+        node.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名词
+        node.getChildByName('name').getComponent(cc.Label).string = data.nickName || data.nickname;//昵称
+        node.getChildByName('score').getComponent(cc.Label).string = '0';
         if (data.KVDataList.length > 0) {
-            layout.getChildByName('score').getComponent(cc.Label).string = data.KVDataList[0].value + '';//分数
+            node.getChildByName('score').getComponent(cc.Label).string = data.KVDataList[0].value + '';//分数
         }
         cc.loader.load({ url: data.avatarUrl, type: 'png' }, (err, texture) => {
             if (err) console.error(err);
-            let userIcon = layout.getChildByName('image').getComponent(cc.Sprite);
+            let userIcon = node.getChildByName('image').getComponent(cc.Sprite);
             userIcon.spriteFrame = new cc.SpriteFrame(texture);
         });
     }
