@@ -29,22 +29,22 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.Shredd",
+  "packageName": "org.cocos2d.subContext",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait",
     "zip": false
   },
-  "startScene": "875d4d58-875c-4198-b67a-ce3a29691a09",
-  "title": "Shredd",
+  "startScene": "568f44b9-9d45-4cb4-bb53-26d52e388bbf",
+  "title": "subContext",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
     "appid": "wx6ac3f5090a6b99c5",
     "orientation": "portrait",
     "separate_engine": false,
-    "subContext": "subContext"
+    "subContext": ""
   },
-  "xxteaKey": "952a952f-64c8-4e",
+  "xxteaKey": "778cc86b-2ebd-4a",
   "zipCompressJs": true
 }

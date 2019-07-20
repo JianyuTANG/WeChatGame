@@ -36,6 +36,7 @@ export default class rank extends cc.Component {
     }
 
     public getRank(){
+        cc.find('Canvas/rank').active=true;
         window.wx.postMessage({
             requestType: 'getrank',
             dataType: 'score',

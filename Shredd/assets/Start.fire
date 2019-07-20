@@ -44,8 +44,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.2768003946920159,
-      "y": 0.2768003946920159,
+      "x": 0.21915364265441895,
+      "y": 0.21915364265441895,
       "z": 1
     },
     "_quat": {
@@ -2305,8 +2305,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 650,
+      "height": 1100
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2383,6 +2383,9 @@
     "settingButton": null,
     "rankButton": null,
     "tutorialButton": null,
+    "rankBoard": {
+      "__id__": 49
+    },
     "ratioWidth": 0,
     "ratioHeight": 0,
     "_id": "e35rsn/9FP4bSUZBtC2WIq"
