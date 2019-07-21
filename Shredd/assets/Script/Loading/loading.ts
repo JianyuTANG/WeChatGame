@@ -11,7 +11,7 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class rank extends cc.Component {
+export default class NewClass extends cc.Component {
 
     @property(cc.Label)
     label: cc.Label = null;
@@ -21,27 +21,12 @@ export default class rank extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    onLoad () {
+        //分包加载
+    }
 
     start () {
-        //this.getRank();
-    }
-
-    
-
-    public submitScore(myScore:number){
-        window.wx.postMessage({
-            requestType: 'submit',
-            dataType: 'score',
-            score: myScore,
-        })
-    }
-
-    private getRank(){
-        window.wx.postMessage({
-            requestType: 'getrank',
-            dataType: 'score',
-        })
+        cc.director.loadScene('Start');
     }
 
     // update (dt) {}

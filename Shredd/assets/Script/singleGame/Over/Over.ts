@@ -32,6 +32,18 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     overShift: cc.Node=null
 
+    @property(cc.Node)
+    multiPlayerButton: cc.Node = null
+
+    @property(cc.Node)
+    rankButton: cc.Node = null
+
+    @property(cc.Node)
+    rankBoard: cc.Node = null
+
+    @property(cc.Node)
+    settingButton: cc.Node = null
+    
     @property(cc.AudioSource)
     audioBg: cc.AudioSource = null
 
@@ -41,6 +53,17 @@ export default class NewClass extends cc.Component {
 
     onLoad() {
         //cc.find('onlineController').getComponent('rank').submitScore();
+        this.matchScreen();
+        this.rankBoard.active=false;
+        this.label.getComponent(cc.Label).string = gameStatus.score.toString();
+        this.audioBg.volume=gameStatus.audioBgVolume;
+    }
+
+    start() {
+
+    }
+
+    private matchScreen(){
         const ratioWidth = cc.winSize.width / 750;
         const ratioHeight = cc.winSize.height / 1334;
         this.background = cc.find('Canvas/overPage');
@@ -51,7 +74,6 @@ export default class NewClass extends cc.Component {
         this.scoreBoard = cc.find('Canvas/score');
         this.scoreBoard.width = 40 * ratioWidth;
         this.scoreBoard.height = 60 * ratioHeight;
-        console.log(")))))))))))")
         this.scoreBoard.x = -167 * ratioWidth;
         this.scoreBoard.y = -54 * ratioHeight;
 
@@ -68,19 +90,27 @@ export default class NewClass extends cc.Component {
         this.singleButton.x = -6 * ratioWidth;
         this.singleButton.y = 387 * ratioHeight;
 
-        console.log(cc.winSize.width)
-        console.log(gameStatus.score);
-        this.label.getComponent(cc.Label).string = gameStatus.score.toString();
+        this.multiPlayerButton=cc.find('Canvas/multiPlayerButton');
+        this.multiPlayerButton.width=335*ratioWidth;
+        this.multiPlayerButton.height = 210 * ratioHeight;
+        this.multiPlayerButton.x = -125 * ratioWidth;
+        this.multiPlayerButton.y = -387 * ratioHeight;
 
-        this.audioBg.volume=gameStatus.audioBgVolume;
+        this.rankButton=cc.find('Canvas/rankButton');
+        this.rankButton.width=100*ratioWidth;
+        this.rankButton.height = 100 * ratioHeight;
+        this.rankButton.x = 86 * ratioWidth;
+        this.rankButton.y = 20 * ratioHeight;
+
+        this.settingButton=cc.find('Canvas/settingButton');
+        this.settingButton.width=100*ratioWidth;
+        this.settingButton.height = 100 * ratioHeight;
+        this.settingButton.x = 230 * ratioWidth;
+        this.settingButton.y = 20 * ratioHeight;
     }
-
-    start() {
-
-    }
-
+/*
     update(dt) {
-        /*if (this.counter % 100 === 0) {
+        if (this.counter % 100 === 0) {
             cc.loader.loadRes("overPage/tryAgain", cc.SpriteFrame, function (err, spriteFrame) {
                 cc.find('Canvas/playButton').getComponent(cc.Button).normalSprite = spriteFrame;
             })
@@ -89,12 +119,25 @@ export default class NewClass extends cc.Component {
                 //this.singleButton.getComponent("playButton").normalSprite = spriteFrame;
             })
         }
-        this.counter++;*/  //做不出频闪qaq
+        this.counter++;  //做不出频闪qaq
     }
+    */
 
     public gameStart() {
         cc.director.loadScene('Game');
         gameStatus.status='on';
+    }
+
+    public hideRank(){
+        cc.find('Canvas/rank').active=false;
+    }
+
+    public showRank(){
+        cc.find('Canvas/rank').active=true;
+    }
+
+    public startOnline(){
+        cc.find('onlineController').getComponent('onlineControl').startOnlineFromOverpage();
     }
 
     toSetting(){

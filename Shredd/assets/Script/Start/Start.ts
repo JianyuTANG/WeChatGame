@@ -42,22 +42,38 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     rankBoard: cc.Node = null;
 
+    @property(cc.Node)
+    connectBoard: cc.Node = null;
+
+    @property(cc.AudioSource)
+    audioBg: cc.AudioSource = null
+
     @property
     ratioWidth: number = 0;
 
     @property
     ratioHeight: number = 0;
+    
+    @property
+    onlineController:cc.Node=null;
 
-    @property(cc.AudioSource)
-    audioBg: cc.AudioSource = null
+
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        cc.game.removePersistRootNode(cc.find('onlineController'));
-        cc.find('Canvas/connectBoard').active = false;
-        this.rankBoard.active=false;
-        console.log(cc.winSize.width);
+        //cc.game.removePersistRootNode(cc.find('onlineController'));
+        this.connectBoard.active = false;
+        this.rankBoard.active = false;
+        this.matchScreen();
+        this.onlineController=cc.find('onlineController');
+    }
+
+    start() {
+
+    }
+
+    private matchScreen() {
         this.ratioWidth = cc.winSize.width / 750;
         this.ratioHeight = cc.winSize.height / 1334;
         this.background = cc.find('Canvas/newbg');
@@ -93,11 +109,7 @@ export default class NewClass extends cc.Component {
         this.tutorialButton.y = smallButtonY;
     }
 
-    start() {
-
-    }
-
-    toSetting(){
+    public toSetting() {
         cc.director.loadScene('Setting');
     }
 
@@ -105,6 +117,22 @@ export default class NewClass extends cc.Component {
         cc.director.loadScene('Game');
         gameStatus.status = 'on';
         this.audioBg.volume = gameStatus.audioBgVolume;
+    }
+
+    public startMatching(){
+        this.onlineController.getComponent('onlineControl').startOnlineMatching();
+    }
+
+    public cancellMatching(){
+        this.onlineController.getComponent('onlineControl').cancellMatching();
+    }
+
+    public showRank(){
+        cc.find('Canvas/rank').active=true;
+    }
+
+    public hideRank(){
+        cc.find('Canvas/rank').active=false;
     }
 
     // update (dt) {}

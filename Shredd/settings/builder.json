@@ -35,9 +35,9 @@
     "orientation": "portrait",
     "zip": false
   },
-  "startScene": "875d4d58-875c-4198-b67a-ce3a29691a09",
+  "startScene": "14b54277-eeae-44f1-bbfe-abe9fd650388",
   "title": "Shredd",
-  "webOrientation": "auto",
+  "webOrientation": "portrait",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
     "appid": "wx6ac3f5090a6b99c5",

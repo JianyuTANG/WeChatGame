@@ -45,12 +45,13 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     connectBoardLabel: cc.Node = null;
 
+
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
         cc.game.addPersistRootNode(this.node);
         this.connectBoard = cc.find('Canvas/connectBoard');
-        this.connectBoardLabel = cc.find('Canvas/connectBoard/Label')
+        this.connectBoardLabel = cc.find('Canvas/connectBoard/Label');
     }
 
     start() {
@@ -58,13 +59,20 @@ export default class NewClass extends cc.Component {
     }
 
     public startOnlineMatching() {
-        console.log(999)
         this.init();
+        this.connectBoard = cc.find('Canvas/connectBoard');
         this.connectBoard.active = true;
+        console.log(666)
         this.enterQueue();
     }
 
+    public startOnlineFromOverpage(){
+        cc.director.loadScene('Start');
+        //this.startOnlineMatching();
+    }
+
     public cancellMatching() {
+        this.connectBoard = cc.find('Canvas/connectBoard');
         this.connectBoard.active = false;
         this.queueIo.disconnect();
         if (this.roomIo != null)
@@ -106,6 +114,8 @@ export default class NewClass extends cc.Component {
     }
 
     private enterRoom(roomId) {
+        this.connectBoard = cc.find('Canvas/connectBoard');
+        this.connectBoardLabel = cc.find('Canvas/connectBoard/Label');
         this.roomIo = io.connect(`http://152.136.192.32:8500/room${roomId}`, { 'reconnection': false });
         this.roomIo.on('playerNum', data => {
             this.playerNum = data.num;

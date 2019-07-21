@@ -10,7 +10,7 @@
 
 const { ccclass, property } = cc._decorator;
 
-var gameStatus = require('../../gameStatus')
+var gameStatus = require('../gameStatus')
 
 @ccclass
 export default class NewClass extends cc.Component {
@@ -46,6 +46,17 @@ export default class NewClass extends cc.Component {
 
     onLoad() {
         //修改背景适配大小
+        this.matchScreen();
+
+        //读取默认背景和音效音量
+        this.bgSlider.getComponent(cc.Slider).progress = gameStatus.audioBgVolume;
+        this._updateBackgroundVolume(this.bgSlider.getComponent(cc.Slider).progress);
+
+        this.audioSlider.getComponent(cc.Slider).progress = gameStatus.audioEffectVolume;
+        this._updateEffectVolume(this.audioSlider.getComponent(cc.Slider).progress);
+    }
+
+    private matchScreen(){
         this.background.width = cc.winSize.width;
         this.background.height = cc.winSize.height;
 
@@ -61,13 +72,6 @@ export default class NewClass extends cc.Component {
         this.rtnBtn.height = 135 * this.ratioHeight;
         this.rtnBtn.x = 6 * this.ratioWidth;
         this.rtnBtn.y = -438 * this.ratioHeight;
-
-        //读取默认背景和音效音量
-        this.bgSlider.getComponent(cc.Slider).progress = gameStatus.audioBgVolume;
-        this._updateBackgroundVolume(this.bgSlider.getComponent(cc.Slider).progress);
-
-        this.audioSlider.getComponent(cc.Slider).progress = gameStatus.audioEffectVolume;
-        this._updateEffectVolume(this.audioSlider.getComponent(cc.Slider).progress);
     }
 
     _updateBackgroundVolume(progress){
