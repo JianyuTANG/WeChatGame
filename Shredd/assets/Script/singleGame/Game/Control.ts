@@ -57,7 +57,7 @@ export default class Control extends cc.Component {
     setPause() {
         console.log('00000'+gameStatus.status)
         if (gameStatus.status === 'pause') {
-            gameStatus.status === 'on'
+            gameStatus.status = 'on'
             this.rightButton.active = true;
             this.leftButton.active = true;
             this.obstacleNode.getComponent('obstaclePool').backToLife();
