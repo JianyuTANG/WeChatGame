@@ -39,6 +39,9 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     tutorialButton: cc.Node = null;
 
+    @property(cc.Node)
+    rankBoard: cc.Node = null;
+
     @property
     ratioWidth: number = 0;
 
@@ -50,6 +53,7 @@ export default class NewClass extends cc.Component {
     onLoad() {
         cc.game.removePersistRootNode(cc.find('onlineController'));
         cc.find('Canvas/connectBoard').active = false;
+        this.rankBoard.active=false;
         console.log(cc.winSize.width);
         this.ratioWidth = cc.winSize.width / 750;
         this.ratioHeight = cc.winSize.height / 1334;
@@ -84,6 +88,8 @@ export default class NewClass extends cc.Component {
         this.tutorialButton.height = smallButtonHeight;
         this.tutorialButton.x = 12 * this.ratioWidth;
         this.tutorialButton.y = smallButtonY;
+        this.rankBoard.width=650*this.ratioWidth;
+        this.rankBoard.height=1100*this.ratioHeight;
     }
 
     start() {

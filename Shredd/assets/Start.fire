@@ -44,8 +44,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.6229629855685764,
-      "y": 0.6229629855685764,
+      "x": 0.10507246758090681,
+      "y": 0.10507246758090681,
       "z": 1
     },
     "_quat": {
@@ -2389,12 +2389,15 @@
     "_enabled": true,
     "label": null,
     "text": "hello",
-    "background": null,
+    "background": {
+      "__id__": 5
+    },
     "startButton": null,
     "multiPlayerButton": null,
     "settingButton": null,
     "rankButton": null,
     "tutorialButton": null,
+    "rankBoard": null,
     "ratioWidth": 0,
     "ratioHeight": 0,
     "_id": "e35rsn/9FP4bSUZBtC2WIq"

@@ -23,7 +23,7 @@ export default class item extends cc.Component {
     rankItem: cc.Prefab = null;
 
     @property(cc.Node)
-    content:cc.Node=null;
+    content: cc.Node = null;
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -86,16 +86,15 @@ export default class item extends cc.Component {
                             }
                             return (y.KVDataList[0].value - x.KVDataList[0].value);
                         })
-                        friendData.forEach(element => {
-                            let myItem = cc.instantiate(this.rankItem);
-                            myItem.getComponent('item').init(friendData.IndexOf(element),element);
-                            cc.find('Canvas/scrollview/view/content').addChild(myItem);
-                        });
+                        const n=friendData.length;
+                        for(let i=0;i<n;i++){
+                            this.initUserItem(i, friendData[i]);
+                        }
                     }
                 })
             }
         });
-        cc.find('Canvas/scrollview').active=true;
+        cc.find('Canvas/scrollview').active = true;
     }
 
     private hideRank() {
@@ -103,8 +102,24 @@ export default class item extends cc.Component {
     }
 
     private clear() {
-        cc.find('Canvas/scrollview').active=false;
+        cc.find('Canvas/scrollview').active = false;
         cc.find('Canvas/scrollview/view/content').removeAllChildren();
+    }
+
+    public initUserItem(position: number, data) {
+        let node = cc.instantiate(this.rankItem);
+        node.parent = this.content;
+        node.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名词
+        node.getChildByName('name').getComponent(cc.Label).string = data.nickName || data.nickname;//昵称
+        node.getChildByName('score').getComponent(cc.Label).string = '0';
+        if (data.KVDataList.length > 0) {
+            node.getChildByName('score').getComponent(cc.Label).string = data.KVDataList[0].value + '';//分数
+        }
+        cc.loader.load({ url: data.avatarUrl, type: 'png' }, (err, texture) => {
+            if (err) console.error(err);
+            let userIcon = node.getChildByName('image').getComponent(cc.Sprite);
+            userIcon.spriteFrame = new cc.SpriteFrame(texture);
+        });
     }
 
     // update (dt) {}
