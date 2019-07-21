@@ -10,7 +10,7 @@
 
 const { ccclass, property } = cc._decorator;
 
-var gameStatus = require('gameStatus')
+var gameStatus = require('../../gameStatus')
 
 import  {Shake}  from './shake';
 

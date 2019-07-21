@@ -24,7 +24,7 @@ export default class rank extends cc.Component {
     // onLoad () {}
 
     start () {
-        this.getRank();
+        //this.getRank();
     }
 
     public showRank(){
@@ -35,7 +35,7 @@ export default class rank extends cc.Component {
         cc.find('Canvas/rank').active=false;
     }
 
-    private submitScore(myScore:number){
+    public submitScore(myScore:number){
         window.wx.postMessage({
             requestType: 'submit',
             dataType: 'score',

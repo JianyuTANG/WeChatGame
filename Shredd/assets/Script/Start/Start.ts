@@ -88,8 +88,6 @@ export default class NewClass extends cc.Component {
         this.tutorialButton.height = smallButtonHeight;
         this.tutorialButton.x = 12 * this.ratioWidth;
         this.tutorialButton.y = smallButtonY;
-        this.rankBoard.width=650*this.ratioWidth;
-        this.rankBoard.height=1100*this.ratioHeight;
     }
 
     start() {

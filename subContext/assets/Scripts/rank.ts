@@ -70,7 +70,7 @@ export default class item extends cc.Component {
             openIdList: ['selfOpenId'],
             success: response => {
                 let selfData = response.data[0];
-                wx.getFriendCloudStorage({
+                window.wx.getFriendCloudStorage({
                     keyList: ['score'],
                     success: res => {
                         let friendData = res.data;
@@ -86,8 +86,8 @@ export default class item extends cc.Component {
                             }
                             return (y.KVDataList[0].value - x.KVDataList[0].value);
                         })
-                        const n=friendData.length;
-                        for(let i=0;i<n;i++){
+                        const n = friendData.length;
+                        for (let i = 0; i < n; i++) {
                             this.initUserItem(i, friendData[i]);
                         }
                     }
@@ -108,7 +108,7 @@ export default class item extends cc.Component {
     public initUserItem(position: number, data) {
         let node = cc.instantiate(this.rankItem);
         node.parent = this.content;
-        node.x=0;
+        node.x = 0;
         node.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名次
         node.getChildByName('name').getComponent(cc.Label).string = data.nickName || data.nickname;//昵称
         node.getChildByName('score').getComponent(cc.Label).string = '0';
