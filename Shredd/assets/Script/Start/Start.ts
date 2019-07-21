@@ -57,10 +57,10 @@ export default class NewClass extends cc.Component {
         this.background.width = cc.winSize.width;
         this.background.height = cc.winSize.height;
         this.startButton = cc.find('Canvas/startButton');
-        this.startButton.width = 225 * this.ratioWidth;
+        this.startButton.width = 230 * this.ratioWidth;
         this.startButton.height = 225 * this.ratioHeight;
-        this.startButton.x = 197 * this.ratioWidth;
-        this.startButton.y = -382 * this.ratioHeight;
+        this.startButton.x = 198 * this.ratioWidth;
+        this.startButton.y = -384 * this.ratioHeight;
         this.multiPlayerButton = cc.find('Canvas/multiPlayerButton');
         this.multiPlayerButton.width = 345 * this.ratioWidth;
         this.multiPlayerButton.height = 65 * this.ratioHeight;

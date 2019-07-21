@@ -43,7 +43,7 @@
     "appid": "wx6ac3f5090a6b99c5",
     "orientation": "portrait",
     "separate_engine": false,
-    "subContext": "E:\\TANG\\GitRepos\\WeChatGame\\subContext"
+    "subContext": "subContext"
   },
   "xxteaKey": "952a952f-64c8-4e",
   "zipCompressJs": true
