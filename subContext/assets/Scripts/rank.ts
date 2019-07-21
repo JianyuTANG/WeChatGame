@@ -102,14 +102,14 @@ export default class item extends cc.Component {
     }
 
     private clear() {
-        cc.find('Canvas/scrollview').active = false;
         cc.find('Canvas/scrollview/view/content').removeAllChildren();
     }
 
     public initUserItem(position: number, data) {
         let node = cc.instantiate(this.rankItem);
         node.parent = this.content;
-        node.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名词
+        node.x=0;
+        node.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名次
         node.getChildByName('name').getComponent(cc.Label).string = data.nickName || data.nickname;//昵称
         node.getChildByName('score').getComponent(cc.Label).string = '0';
         if (data.KVDataList.length > 0) {

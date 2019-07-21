@@ -24,10 +24,18 @@ export default class rank extends cc.Component {
     // onLoad () {}
 
     start () {
-
+        this.getRank();
     }
 
-    public submitScore(myScore:number){
+    public showRank(){
+        cc.find('Canvas/rank').active=true;
+    }
+
+    public hideRank(){
+        cc.find('Canvas/rank').active=false;
+    }
+
+    private submitScore(myScore:number){
         window.wx.postMessage({
             requestType: 'submit',
             dataType: 'score',
@@ -35,8 +43,7 @@ export default class rank extends cc.Component {
         })
     }
 
-    public getRank(){
-        cc.find('Canvas/rank').active=true;
+    private getRank(){
         window.wx.postMessage({
             requestType: 'getrank',
             dataType: 'score',

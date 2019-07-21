@@ -44,8 +44,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.21915364265441895,
-      "y": 0.21915364265441895,
+      "x": 0.21885417302449545,
+      "y": 0.21885417302449545,
       "z": 1
     },
     "_quat": {
@@ -1501,7 +1501,7 @@
     },
     "component": "",
     "_componentId": "402297RE45GP6HH2IxOd3p2",
-    "handler": "getRank",
+    "handler": "showRank",
     "customEventData": ""
   },
   {
@@ -2305,8 +2305,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 650,
-      "height": 1100
+      "width": 300,
+      "height": 500
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
