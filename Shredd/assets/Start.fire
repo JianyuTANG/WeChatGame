@@ -2397,7 +2397,9 @@
     "settingButton": null,
     "rankButton": null,
     "tutorialButton": null,
-    "rankBoard": null,
+    "rankBoard": {
+      "__id__": 50
+    },
     "ratioWidth": 0,
     "ratioHeight": 0,
     "_id": "e35rsn/9FP4bSUZBtC2WIq"

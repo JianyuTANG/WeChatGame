@@ -30,6 +30,12 @@ export default class NewClass extends cc.Component {
     lose: cc.Node = null;
 
     @property(cc.Node)
+    waiting: cc.Node = null;
+
+    @property(cc.Node)
+    deuce: cc.Node = null;
+
+    @property(cc.Node)
     selfScore: cc.Node = null;
 
     @property(cc.Node)
@@ -54,7 +60,7 @@ export default class NewClass extends cc.Component {
             this.onlineController.connectionStatus = 0;
         }
         else {
-            //显示等待对手
+            this.waiting.active = true;
         }
     }
 
@@ -78,6 +84,10 @@ export default class NewClass extends cc.Component {
         this.lose = cc.find('Canvas/lose');
         this.lose.y = 400 * heightRatio;
         this.lose.width = 650 * widthRatio;
+        this.waiting.y = 400 * heightRatio;
+        this.waiting.width = 650 * widthRatio;
+        this.deuce.y = 400 * heightRatio;
+        this.deuce.width = 650 * widthRatio;
         this.selfScore = cc.find('Canvas/selfScore');
         this.selfScore.x = -200 * widthRatio;
         this.selfScore.y = -120 * heightRatio;
@@ -95,10 +105,12 @@ export default class NewClass extends cc.Component {
         this.rivalScore.getComponent(cc.Label).string = '';
         this.win.active = false;
         this.lose.active = false;
+        this.deuce.active = false;
+        this.waiting.active = false;
     }
 
     private showMatchResult() {
-        //隐藏等待提示
+        this.waiting.active = false;
         if (this.onlineController.rivalScore > gameStatus.score) {
             this.lose.active = true;
         }
@@ -106,7 +118,7 @@ export default class NewClass extends cc.Component {
             this.win.active = true;
         }
         else {
-            //平局
+            this.deuce.active = true;
         }
         //this.selfScore.getComponent(cc.Label).string=gameStatus.score.toString();
         this.rivalScore.getComponent(cc.Label).string = this.onlineController.rivalScore.toString();
