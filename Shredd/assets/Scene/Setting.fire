@@ -684,7 +684,7 @@
       }
     ],
     "_prefab": null,
-    "_opacity": 100,
+    "_opacity": 50,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -874,16 +874,16 @@
     },
     "_N$pressedColor": {
       "__type__": "cc.Color",
-      "r": 159,
-      "g": 158,
-      "b": 158,
+      "r": 29,
+      "g": 29,
+      "b": 29,
       "a": 255
     },
     "pressedColor": {
       "__type__": "cc.Color",
-      "r": 159,
-      "g": 158,
-      "b": 158,
+      "r": 29,
+      "g": 29,
+      "b": 29,
       "a": 255
     },
     "_N$hoverColor": {
@@ -937,7 +937,7 @@
     },
     "component": "",
     "_componentId": "7bb329Z5gBIaod51+90n7EP",
-    "handler": "backToStart",
+    "handler": "back",
     "customEventData": ""
   },
   {
@@ -1033,8 +1033,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 300,
-      "height": 20
+      "width": 200,
+      "height": 40
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1124,8 +1124,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 32,
-      "height": 32
+      "width": 60,
+      "height": 60
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1172,7 +1172,7 @@
       "__uuid__": "e7aba14b-f956-4480-b254-8d57832e273f"
     },
     "_type": 1,
-    "_sizeMode": 2,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",

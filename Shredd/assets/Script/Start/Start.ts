@@ -67,6 +67,9 @@ export default class NewClass extends cc.Component {
         this.rankBoard.active = false;
         this.matchScreen();
         this.onlineController=cc.find('onlineController');
+        gameStatus.status='start'
+
+        this.audioBg.volume = gameStatus.audioBgVolume;
     }
 
     start() {
@@ -113,10 +116,13 @@ export default class NewClass extends cc.Component {
         cc.director.loadScene('Setting');
     }
 
+    public toTutorial(){
+        cc.director.loadScene("Tutorial")
+    }
+
     public gameStart() {
         cc.director.loadScene('Game');
         gameStatus.status = 'on';
-        this.audioBg.volume = gameStatus.audioBgVolume;
     }
 
     public startMatching(){

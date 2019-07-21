@@ -56,11 +56,12 @@ export default class NewClass extends cc.Component {
         this.matchScreen();
         this.rankBoard.active=false;
         this.label.getComponent(cc.Label).string = gameStatus.score.toString();
+
         this.audioBg.volume=gameStatus.audioBgVolume;
     }
 
     start() {
-
+        this.audioBg.volume=gameStatus.audioBgVolume;
     }
 
     private matchScreen(){

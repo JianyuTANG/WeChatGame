@@ -40,8 +40,12 @@ export default class NewClass extends cc.Component {
     ratioWidth: number = cc.winSize.width / 750
     ratioHeight: number = cc.winSize.height / 1334;
 
-    backToStart(){
-        cc.director.loadScene("Start");
+    back() {
+        if (gameStatus.status === 'over') {
+            cc.director.loadScene('Over')
+        } else if (gameStatus.status === 'start') {
+            cc.director.loadScene("Start");
+        }
     }
 
     onLoad() {
@@ -91,7 +95,7 @@ export default class NewClass extends cc.Component {
 
     
     onEffectSliderEvent (sender, eventType) {
-        //this._updateEffectVolume(sender.progress);
+        this._updateEffectVolume(sender.progress);
         console.log(sender.progress);
     }
 

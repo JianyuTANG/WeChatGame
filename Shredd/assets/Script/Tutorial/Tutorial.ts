@@ -1,5 +1,3 @@
-
-
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
@@ -10,21 +8,28 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
-
 const { ccclass, property } = cc._decorator;
 
-var gameStatus = require('../../gameStatus')
+var gameStatus = require("../gameStatus")
 
-import { Shake } from './shake';
 
 @ccclass
-export default class Control extends cc.Component {
+export default class NewClass extends cc.Component {
 
     @property(cc.Label)
     label: cc.Label = null;
 
     @property
     text: string = 'hello';
+
+    @property(cc.Node)
+    bg: cc.Node = null
+
+    @property(cc.AudioSource)
+    bgMusic: cc.AudioSource = null
+
+    ratioWidth = cc.winSize.width / 750;
+    ratioHeight = cc.winSize.height / 1334;
 
     @property(cc.Node)
     public blockRight: cc.Node = null;
@@ -39,62 +44,37 @@ export default class Control extends cc.Component {
     stateLeft: number = 0;
 
     @property(cc.Node)
-    obstacleNode: cc.Node = null
+    labelText: cc.Node = null
 
     @property(cc.Node)
-    rightButton: cc.Node = null
+    rtnBtn: cc.Node = null
 
-    @property(cc.Node)
-    leftButton: cc.Node = null
-
-    @property(cc.Node)
-    pauseBtn: cc.Node = null
-
-    @property(cc.AudioSource)
-    audioBg: cc.AudioSource = null
-
-    counter: number = 0;
+    step = 0
 
     // LIFE-CYCLE CALLBACKS:
 
-    setPause() {
-        console.log('00000'+gameStatus.status)
-        if (gameStatus.status === 'pause') {
-            gameStatus.status = 'on'
-            this.rightButton.active = true;
-            this.leftButton.active = true;
-            this.obstacleNode.getComponent('obstaclePool').backToLife();
-        } else {
-            if (gameStatus.status === 'on') {
-                gameStatus.status = 'pause'
-            }
-            this.obstacleNode.getComponent('obstaclePool').setPause();
-            //控制面板使不激活
-            this.rightButton.active = false;
-            this.leftButton.active = false;
-        }
+    back() {
+            cc.director.loadScene("Start");
     }
 
     onLoad() {
+        this.bg.width = cc.winSize.width;
+        this.bg.height = cc.winSize.height;
+
+        this.bgMusic.volume = gameStatus.audioBgVolume;
+
         this.blockRight = cc.find("Canvas/blockRight");
         this.blockLeft = cc.find("Canvas/blockLeft");
         this.stateLeft = 0;
         this.stateRight = 0;
-        //console.log(this.blockRight.getComponent('block').onLeftTouchStart)
-        //this.blockRight.getComponent('block').moveDistance=Math.floor((cc.winSize.width / 2) - 40);
-        //this.blockLeft.getComponent('block').moveDistance=Math.floor((cc.winSize.width / 2) - 40);
+
+        this.rtnBtn.width = 588 * this.ratioWidth;
+        this.rtnBtn.height = 135 * this.ratioHeight;
+        this.rtnBtn.x = 6 * this.ratioWidth;
+        this.rtnBtn.y = -438 * this.ratioHeight;
+
         console.log(this.blockLeft.getComponent('block').moveDistance)
         this.addEventListners();
-
-        this.audioBg.volume= gameStatus.auidoBgVolume;
-
-        var ratioWidth= cc.winSize.width/750;
-        var ratioHeight = cc.winSize.height /1334
-      //  this.pauseBtn.width=50
-       // this.pauseBtn.height=50
-      //  this.pauseBtn.x=110*ratioWidth
-      //  this.pauseBtn.y=252*ratioHeight
-        //cc.director.getCollisionManager().enabled=true;
     }
 
     start() {
@@ -107,8 +87,6 @@ export default class Control extends cc.Component {
 
         this.node.on('rightTouchStart', this.rightTouchStart, this);
         this.node.on('rightTouchEnd', this.rightTouchEnd, this);
-
-        this.node.on('setPause', this.setPause, this);
     }
 
     private leftTouchStart() {
@@ -136,10 +114,18 @@ export default class Control extends cc.Component {
         if (this.stateRight === 0) {
             this.blockRight.getComponent('block').onLeftTouchEnd();
             this.blockLeft.getComponent('block').onLeftTouchEnd();
+            if (this.step === 1) {
+                this.step = 2;
+                this.labelText.getComponent(cc.Label).string = '点击左右两半屏幕\n两个方块会分别移动\n到两边';
+            }
         }
         else {
             this.blockLeft.getComponent('block').onLeftTouchEnd();
             this.blockLeft.getComponent('block').onRightTouchStart();
+            if (this.step === 2) {
+                this.step = 3;
+                this.labelText.getComponent(cc.Label).string = '游戏中，\n你需要通过以上动作\n来躲避障碍物。\n游戏难度会随着游戏\n速度提高而增大.\n教程结束!';
+            }
         }
     }
 
@@ -168,34 +154,22 @@ export default class Control extends cc.Component {
         if (this.stateLeft === 0) {
             this.blockLeft.getComponent('block').onRightTouchEnd();
             this.blockRight.getComponent('block').onRightTouchEnd();
+            if (this.step === 0) {
+                this.step = 1;
+                this.labelText.getComponent(cc.Label).string = '点击左半屏幕\n两个方块会迅速移动\n到最左边';
+            }
         }
         else {
             this.blockRight.getComponent('block').onRightTouchEnd();
             this.blockRight.getComponent('block').onLeftTouchStart();
-        }
-    }
-
-
-
-    update(dt) {
-        console.log(gameStatus.status)
-        /*if (gameStatus.status === 'pause') {
-            this.setPause();
-        } else */if (gameStatus.status === 'over') {
-            //生成撞击抖动效果
-            let shake: Shake = Shake.create(0.5, 2, 10);
-            this.node.runAction(shake);
-            this.counter++;
-
-            //20帧过后加载结束界面
-            if (this.counter === 20) {
-                if (gameStatus.online === true) {
-                    cc.director.loadScene('onlineOver');
-                }
-                else {
-                    cc.director.loadScene("Over");
-                }
+            if (this.step === 2) {
+                this.step = 3;
+                this.labelText.getComponent(cc.Label).string = '游戏中，\n你需要通过以上动作\n来躲避障碍物。\n游戏难度会随着游戏\n速度提高而增大.\n教程结束!';
             }
         }
     }
+
+
+
+    //update(dt) {}
 }

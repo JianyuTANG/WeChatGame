@@ -39,9 +39,6 @@ export default class Block extends cc.Component {
     audioCollision: cc.AudioSource = null
 
     @property(cc.AudioSource)
-    audioBg: cc.AudioSource = null
-
-    @property(cc.AudioSource)
     audioTap: cc.AudioSource = null
 
     // 只在两个碰撞体开始接触时被调用一次
@@ -101,12 +98,15 @@ export default class Block extends cc.Component {
         //this.moveDistance=Math.floor((cc.winSize.width / 2) - 40);
         console.log(cc.winSize.width)
         //console.log(this.moveDistance)
-        this.audioBg.volume = gameStatus.audioBgVolume;
+        //this.audioBg.volume = gameStatus.audioBgVolume;
         this.audioCollision.volume = gameStatus.audioEffectVolume;
         this.audioTap.volume = gameStatus.audioEffectVolume;
     }
 
     start() {
+        //this.audioBg.volume = gameStatus.audioBgVolume;
+        this.audioCollision.volume = gameStatus.audioEffectVolume;
+        this.audioTap.volume = gameStatus.audioEffectVolume;
     }
 
     public moveRight() {
