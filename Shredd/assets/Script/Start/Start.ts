@@ -48,6 +48,9 @@ export default class NewClass extends cc.Component {
     @property
     ratioHeight: number = 0;
 
+    @property(cc.AudioSource)
+    audioBg: cc.AudioSource = null
+
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
@@ -94,9 +97,14 @@ export default class NewClass extends cc.Component {
 
     }
 
+    toSetting(){
+        cc.director.loadScene('Setting');
+    }
+
     public gameStart() {
         cc.director.loadScene('Game');
         gameStatus.status = 'on';
+        this.audioBg.volume = gameStatus.audioBgVolume;
     }
 
     // update (dt) {}

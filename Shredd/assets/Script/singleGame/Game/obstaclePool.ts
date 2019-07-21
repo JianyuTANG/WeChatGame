@@ -125,6 +125,13 @@ export default class NewClass extends cc.Component {
         }
     }
 
+    backToLife(){
+        for (let i in this.node.children) {
+            //使所有障碍物静止
+            this.node.children[i].getComponent(cc.RigidBody).linearVelocity=this.getPace();
+        }
+    }
+
     getPace(){
         return cc.v2(0,-320-this.level*20)
     }

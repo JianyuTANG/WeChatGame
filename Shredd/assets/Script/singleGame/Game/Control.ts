@@ -47,15 +47,29 @@ export default class Control extends cc.Component {
     @property(cc.Node)
     leftButton: cc.Node = null
 
+    @property(cc.Node)
+    pauseBtn: cc.Node = null
+
     counter: number = 0;
 
     // LIFE-CYCLE CALLBACKS:
 
     setPause() {
-        this.obstacleNode.getComponent('obstaclePool').setPause();
-        //控制面板使不激活
-        this.rightButton.active = false;
-        this.leftButton.active = false;
+        console.log('00000'+gameStatus.status)
+        if (gameStatus.status === 'pause') {
+            gameStatus.status === 'on'
+            this.rightButton.active = true;
+            this.leftButton.active = true;
+            this.obstacleNode.getComponent('obstaclePool').backToLife();
+        } else {
+            if (gameStatus.status === 'on') {
+                gameStatus.status = 'pause'
+            }
+            this.obstacleNode.getComponent('obstaclePool').setPause();
+            //控制面板使不激活
+            this.rightButton.active = false;
+            this.leftButton.active = false;
+        }
     }
 
     onLoad() {
@@ -69,6 +83,12 @@ export default class Control extends cc.Component {
         console.log(this.blockLeft.getComponent('block').moveDistance)
         this.addEventListners();
 
+        var ratioWidth= cc.winSize.width/750;
+        var ratioHeight = cc.winSize.height /1334
+      //  this.pauseBtn.width=50
+       // this.pauseBtn.height=50
+      //  this.pauseBtn.x=110*ratioWidth
+      //  this.pauseBtn.y=252*ratioHeight
         //cc.director.getCollisionManager().enabled=true;
     }
 
@@ -154,9 +174,9 @@ export default class Control extends cc.Component {
 
     update(dt) {
         console.log(gameStatus.status)
-        if (gameStatus.status === 'pause') {
+        /*if (gameStatus.status === 'pause') {
             this.setPause();
-        } else if (gameStatus.status === 'over') {
+        } else */if (gameStatus.status === 'over') {
             //生成撞击抖动效果
             let shake: Shake = Shake.create(0.5, 2, 10);
             this.node.runAction(shake);

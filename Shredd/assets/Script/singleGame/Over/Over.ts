@@ -32,6 +32,9 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     overShift: cc.Node=null
 
+    @property(cc.AudioSource)
+    audioBg: cc.AudioSource = null
+
     // LIFE-CYCLE CALLBACKS:
 
     counter=0;
@@ -68,6 +71,8 @@ export default class NewClass extends cc.Component {
         console.log(cc.winSize.width)
         console.log(gameStatus.score);
         this.label.getComponent(cc.Label).string = gameStatus.score.toString();
+
+        this.audioBg.volume=gameStatus.audioBgVolume;
     }
 
     start() {
@@ -90,5 +95,9 @@ export default class NewClass extends cc.Component {
     public gameStart() {
         cc.director.loadScene('Game');
         gameStatus.status='on';
+    }
+
+    toSetting(){
+        cc.director.loadScene('Setting');
     }
 }

@@ -19,6 +19,9 @@ export default class NewClass extends cc.Component {
     @property
     text: string = 'hello';
 
+    @property(cc.AudioSource)
+    audioTap: cc.AudioSource = null
+
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
@@ -36,6 +39,7 @@ export default class NewClass extends cc.Component {
     }
 
     private touchStart(){
+        this.audioTap.play()
         this.node.dispatchEvent( new cc.Event.EventCustom('leftTouchStart', true) );
     }
 

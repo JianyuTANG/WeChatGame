@@ -12,7 +12,7 @@ const { ccclass, property } = cc._decorator;
 
 var gameStatus = require('../../gameStatus')
 
-import  {Shake}  from './shake';
+import { Shake } from './shake';
 
 @ccclass
 export default class Block extends cc.Component {
@@ -38,62 +38,62 @@ export default class Block extends cc.Component {
     @property(cc.AudioSource)
     audioCollision: cc.AudioSource = null
 
-    @property(cc.AudioClip)
-    collisionEffect: cc.AudioClip = null
+    @property(cc.AudioSource)
+    audioBg: cc.AudioSource = null
+
+    @property(cc.AudioSource)
+    audioTap: cc.AudioSource = null
 
     // 只在两个碰撞体开始接触时被调用一次
-     onBeginContact(contact, selfCollider, otherCollider) {
-         console.log(otherCollider.node.name)
+    onBeginContact(contact, selfCollider, otherCollider) {
+        console.log(otherCollider.node.name)
         if (otherCollider.node.name === 'blueBonus') {
-            console.log("oooooooooooooooooooo")
             /*let shake: Shake = Shake.create(0.5, 0, 10);
             this.node.runAction(shake);*/
-        }else{
-           // this.audioCollision.play()
-            cc.audioEngine.playEffect(this.collisionEffect, false)
-         console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
-         let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 2;
-            if (score > 0) {
-                gameStatus.score = score;
-            }
-            
-            console.log("#################")
-         gameStatus.status = 'over'
-         this.node.dispatchEvent( new cc.Event.EventCustom('setPause', true) );
-        // cc.director.loadScene("Over");
-        }
-     }
-
-    // 只在两个碰撞体结束接触时被调用一次
-   /* onEndContact(contact, selfCollider, otherCollider) {
-        if (otherCollider.getComponent('blueBonus') !== null) {
-            let shake: Shake = Shake.create(1, 20, 10);
-            this.node.runAction(shake);
         } else {
-            console.log("lllllllllllllllllllllll")
-            //获取当前成绩，写入全局变量中
+            this.audioCollision.play()
             let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 2;
             if (score > 0) {
                 gameStatus.score = score;
             }
-            gameStatus.status = 'over'
-        }
-        if (gameStatus.online === true) {
-            this.onlineController = cc.find('onlineController');
-            const online = this.onlineController.getComponent('online');
-            online.gameOver();
-        }
-        cc.director.loadScene("Over");
 
-    }/*,
+            console.log("#################")
+            gameStatus.status = 'over'
+            this.node.dispatchEvent(new cc.Event.EventCustom('setPause', true));
+            // cc.director.loadScene("Over");
+        }
+    }
+
+    // 只在两个碰撞体结束接触时被调用一次
+    /* onEndContact(contact, selfCollider, otherCollider) {
+         if (otherCollider.getComponent('blueBonus') !== null) {
+             let shake: Shake = Shake.create(1, 20, 10);
+             this.node.runAction(shake);
+         } else {
+             console.log("lllllllllllllllllllllll")
+             //获取当前成绩，写入全局变量中
+             let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 2;
+             if (score > 0) {
+                 gameStatus.score = score;
+             }
+             gameStatus.status = 'over'
+         }
+         if (gameStatus.online === true) {
+             this.onlineController = cc.find('onlineController');
+             const online = this.onlineController.getComponent('online');
+             online.gameOver();
+         }
+         cc.director.loadScene("Over");
  
-    // 每次将要处理碰撞体接触逻辑时被调用
-    onPreSolve: function (contact, selfCollider, otherCollider) {
-    },
- 
-    // 每次处理完碰撞体接触逻辑时被调用
-    onPostSolve: function (contact, selfCollider, otherCollider) {
-    }*/
+     }/*,
+  
+     // 每次将要处理碰撞体接触逻辑时被调用
+     onPreSolve: function (contact, selfCollider, otherCollider) {
+     },
+  
+     // 每次处理完碰撞体接触逻辑时被调用
+     onPostSolve: function (contact, selfCollider, otherCollider) {
+     }*/
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -101,6 +101,9 @@ export default class Block extends cc.Component {
         //this.moveDistance=Math.floor((cc.winSize.width / 2) - 40);
         console.log(cc.winSize.width)
         //console.log(this.moveDistance)
+        this.audioBg.volume = gameStatus.audioBgVolume;
+        this.audioCollision.volume = gameStatus.audioEffectVolume;
+        this.audioTap.volume = gameStatus.audioEffectVolume;
     }
 
     start() {
