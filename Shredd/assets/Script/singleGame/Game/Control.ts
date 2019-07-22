@@ -1,5 +1,3 @@
-
-
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
@@ -53,12 +51,13 @@ export default class Control extends cc.Component {
     @property(cc.AudioSource)
     audioBg: cc.AudioSource = null
 
+
     counter: number = 0;
 
     // LIFE-CYCLE CALLBACKS:
 
     setPause() {
-        console.log('00000'+gameStatus.status)
+        console.log('00000' + gameStatus.status)
         if (gameStatus.status === 'pause') {
             gameStatus.status = 'on'
             this.rightButton.active = true;
@@ -72,6 +71,22 @@ export default class Control extends cc.Component {
             //控制面板使不激活
             this.rightButton.active = false;
             this.leftButton.active = false;
+
+            if (gameStatus.status === 'over') {
+                //生成撞击抖动效果,0.5秒后加载结束界面
+                let shake: Shake = Shake.create(0.5, 2, 10);
+                this.node.runAction(shake);
+                // this.counter++;
+                this.scheduleOnce(function () {
+                    if (gameStatus.online === true) {
+                        cc.director.loadScene('onlineOver');
+                    }
+                    else {
+                        cc.director.loadScene("Over");
+                    }
+                }, 0.5);
+
+            }
         }
     }
 
@@ -86,15 +101,11 @@ export default class Control extends cc.Component {
         console.log(this.blockLeft.getComponent('block').moveDistance)
         this.addEventListners();
 
-        this.audioBg.volume= gameStatus.auidoBgVolume;
+        //调整背景音乐音量
+        this.audioBg.volume = gameStatus.auidoBgVolume;
 
-        var ratioWidth= cc.winSize.width/750;
-        var ratioHeight = cc.winSize.height /1334
-      //  this.pauseBtn.width=50
-       // this.pauseBtn.height=50
-      //  this.pauseBtn.x=110*ratioWidth
-      //  this.pauseBtn.y=252*ratioHeight
-        //cc.director.getCollisionManager().enabled=true;
+        var ratioWidth = cc.winSize.width / 750;
+        var ratioHeight = cc.winSize.height / 1334
     }
 
     start() {
@@ -178,24 +189,5 @@ export default class Control extends cc.Component {
 
 
     update(dt) {
-        console.log(gameStatus.status)
-        /*if (gameStatus.status === 'pause') {
-            this.setPause();
-        } else */if (gameStatus.status === 'over') {
-            //生成撞击抖动效果
-            let shake: Shake = Shake.create(0.5, 2, 10);
-            this.node.runAction(shake);
-            this.counter++;
-
-            //20帧过后加载结束界面
-            if (this.counter === 20) {
-                if (gameStatus.online === true) {
-                    cc.director.loadScene('onlineOver');
-                }
-                else {
-                    cc.director.loadScene("Over");
-                }
-            }
-        }
     }
 }

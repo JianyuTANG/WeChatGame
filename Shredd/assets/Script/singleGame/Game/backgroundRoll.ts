@@ -54,12 +54,9 @@ export default class NewClass extends cc.Component {
         }
     }
 
-    start() {
-
-    }
+    //start() {}
 
     update(dt) {
-        //console.log("moveeeeeeeeeeeeeee")
         if (gameStatus.status === 'on') {
             this.bgMove(this.far_bg, this.bg_speed);
         }
