@@ -10,7 +10,7 @@
 
 const { ccclass, property } = cc._decorator;
 let gameStatus = require("../gameStatus")
-let io = require('socket.io')
+let io = require('./weapp.socket.io.js')
 
 @ccclass
 export default class NewClass extends cc.Component {
@@ -20,9 +20,6 @@ export default class NewClass extends cc.Component {
 
     @property
     text: string = 'hello';
-
-    //@property
-    //io = (window as any).io || {};
 
     @property
     roomIo = null;

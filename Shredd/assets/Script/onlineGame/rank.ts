@@ -24,7 +24,7 @@ export default class rank extends cc.Component {
     // onLoad () {}
 
     start () {
-        //this.getRank();
+        this.getRank();
     }
 
     
