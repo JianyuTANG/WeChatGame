@@ -71,6 +71,7 @@ export default class NewClass extends cc.Component {
     public cancellMatching() {
         this.connectBoard = cc.find('Canvas/connectBoard');
         this.connectBoard.active = false;
+        gameStatus.online = false;
         this.queueIo.disconnect();
         if (this.roomIo != null)
             this.roomIo.disconnect();
@@ -91,6 +92,7 @@ export default class NewClass extends cc.Component {
         this.connectionStatus = 0;
         this.playerNum = -1;
         this.rivalScore = 0;
+        gameStatus.online = true;
     }
 
     private enterQueue() {

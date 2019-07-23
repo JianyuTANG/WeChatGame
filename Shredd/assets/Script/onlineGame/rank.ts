@@ -34,14 +34,14 @@ export default class rank extends cc.Component {
             requestType: 'submit',
             dataType: 'score',
             score: myScore,
-        })
+        });
     }
 
     private getRank(){
         window.wx.postMessage({
             requestType: 'getrank',
             dataType: 'score',
-        })
+        });
     }
 
     // update (dt) {}

@@ -57,9 +57,12 @@ export default class item extends cc.Component {
                 window.wx.setUserCloudStorage({
                     KVDataList: [{
                         key: 'score',
-                        value: score,
-                    }]
-                })
+                        value: '' + score,
+                    }],
+                    success: res => {
+                        console.log('succeed submit!')
+                    }
+                });
             }
         })
     }

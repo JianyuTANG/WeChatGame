@@ -52,7 +52,8 @@ export default class NewClass extends cc.Component {
     counter=0;
 
     onLoad() {
-        //cc.find('onlineController').getComponent('rank').submitScore();
+        cc.find('onlineController').getComponent('rank').submitScore(gameStatus.score);
+        cc.find('onlineController').getComponent('rank').getRank();
         this.matchScreen();
         this.rankBoard.active=false;
         this.label.getComponent(cc.Label).string = gameStatus.score.toString();
@@ -138,7 +139,9 @@ export default class NewClass extends cc.Component {
     }
 
     public startOnline(){
-        cc.find('onlineController').getComponent('onlineControl').startOnlineFromOverpage();
+        gameStatus.startOnlineFromOverpage=true;
+        cc.director.loadScene('Start');
+        //cc.find('onlineController').getComponent('onlineControl').startOnlineFromOverpage();
     }
 
     toSetting(){

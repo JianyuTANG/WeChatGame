@@ -53,9 +53,9 @@ export default class NewClass extends cc.Component {
 
     @property
     ratioHeight: number = 0;
-    
+
     @property
-    onlineController:cc.Node=null;
+    onlineController: cc.Node = null;
 
 
 
@@ -66,14 +66,17 @@ export default class NewClass extends cc.Component {
         this.connectBoard.active = false;
         this.rankBoard.active = false;
         this.matchScreen();
-        this.onlineController=cc.find('onlineController');
-        gameStatus.status='start'
-
+        this.onlineController = cc.find('onlineController');
+        gameStatus.status = 'start'
+        gameStatus.online = false;
         this.audioBg.volume = gameStatus.audioBgVolume;
     }
 
     start() {
-
+        if(gameStatus.startOnlineFromOverpage){
+            gameStatus.startOnlineFromOverpage=false;
+            this.startMatching();
+        }
     }
 
     private matchScreen() {
@@ -113,32 +116,42 @@ export default class NewClass extends cc.Component {
     }
 
     public toSetting() {
-        cc.director.loadScene('Setting');
+        if (!gameStatus.online) {
+            cc.director.loadScene('Setting');
+        }
     }
 
-    public toTutorial(){
-        cc.director.loadScene("Tutorial")
+    public toTutorial() {
+        if (!gameStatus.online) {
+            cc.director.loadScene("Tutorial")
+        }
     }
 
     public gameStart() {
-        cc.director.loadScene('Game');
-        gameStatus.status = 'on';
+        if (!gameStatus.online) {
+            cc.director.loadScene('Game');
+            gameStatus.status = 'on';
+        }
     }
 
-    public startMatching(){
-        this.onlineController.getComponent('onlineControl').startOnlineMatching();
+    public startMatching() {
+        if (!gameStatus.online) {
+            this.onlineController.getComponent('onlineControl').startOnlineMatching();
+        }
     }
 
-    public cancellMatching(){
+    public cancellMatching() {
         this.onlineController.getComponent('onlineControl').cancellMatching();
     }
 
-    public showRank(){
-        cc.find('Canvas/rank').active=true;
+    public showRank() {
+        if (!gameStatus.online) {
+            cc.find('Canvas/rank').active = true;
+        }
     }
 
-    public hideRank(){
-        cc.find('Canvas/rank').active=false;
+    public hideRank() {
+        cc.find('Canvas/rank').active = false;
     }
 
     // update (dt) {}
