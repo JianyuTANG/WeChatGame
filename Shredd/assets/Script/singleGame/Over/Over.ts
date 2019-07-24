@@ -130,14 +130,6 @@ export default class NewClass extends cc.Component {
         gameStatus.status='on';
     }
 
-    public hideRank(){
-        cc.find('Canvas/rank').active=false;
-    }
-
-    public showRank(){
-        cc.find('Canvas/rank').active=true;
-    }
-
     public startOnline(){
         gameStatus.startOnlineFromOverpage=true;
         cc.director.loadScene('Start');

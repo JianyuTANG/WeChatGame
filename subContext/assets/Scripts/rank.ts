@@ -22,12 +22,24 @@ export default class item extends cc.Component {
     @property(cc.Prefab)
     rankItem: cc.Prefab = null;
 
+    @property(cc.Prefab)
+    pageItem: cc.Prefab = null;
+
     @property(cc.Node)
     content: cc.Node = null;
 
+    @property
+    pages = [];
+
+    @property
+    currrentPage: number = 0;
+
+    @property
+    pageNum: number = 0;
+
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    //onLoad () {}
 
     start() {
         window.wx.onMessage(data => {
@@ -38,10 +50,18 @@ export default class item extends cc.Component {
                 case 'getrank':
                     this.postRank();
                     break;
-                case 'closeRANK':
+                case 'showrank':
+                    this.showRank();
+                    break;
+                case 'closerank':
                     this.hideRank();
                     break;
-
+                case 'down':
+                    this.pageDown();
+                    break;
+                case 'up':
+                    this.pageUp();
+                    break;
             }
         })
     }
@@ -90,27 +110,58 @@ export default class item extends cc.Component {
                             return (y.KVDataList[0].value - x.KVDataList[0].value);
                         })
                         const n = friendData.length;
+                        this.pageNum = Math.floor(n / 7);
+                        for (let i = 0; i <= this.pageNum; i++) {
+                            let page = cc.instantiate(this.pageItem);
+                            page.parent = cc.find('Canvas');
+                            page.active = false;
+                            page.x = 0;
+                            page.y = 0;
+                            this.pages.push(page);
+                        }
                         for (let i = 0; i < n; i++) {
-                            this.initUserItem(i, friendData[i]);
+                            this.initUserItem(i, friendData[i], this.pages[Math.floor(i / 7)]);
                         }
                     }
                 })
             }
         });
-        cc.find('Canvas/scrollview').active = true;
     }
 
     private hideRank() {
+        this.pages[this.currrentPage].active = false;
+    }
 
+    private showRank() {
+        this.pages[0].active = true;
+        this.currrentPage = 0;
+    }
+
+    private pageDown() {
+        if (this.currrentPage === this.pageNum) {
+            return;
+        }
+        this.pages[this.currrentPage].active = false;
+        this.currrentPage++;
+        this.pages[this.currrentPage].active = true;
+    }
+
+    private pageUp() {
+        if (this.currrentPage === 0) {
+            return;
+        }
+        this.pages[this.currrentPage].active = false;
+        this.currrentPage--;
+        this.pages[this.currrentPage].active = true;
     }
 
     private clear() {
-        cc.find('Canvas/scrollview/view/content').removeAllChildren();
+        this.pages = [];
     }
 
-    public initUserItem(position: number, data) {
+    public initUserItem(position: number, data, father) {
         let node = cc.instantiate(this.rankItem);
-        node.parent = this.content;
+        node.parent = father;
         node.x = 0;
         node.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名次
         node.getChildByName('name').getComponent(cc.Label).string = data.nickName || data.nickname;//昵称

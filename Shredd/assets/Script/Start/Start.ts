@@ -34,9 +34,6 @@ export default class NewClass extends cc.Component {
     settingButton: cc.Node = null;
 
     @property(cc.Node)
-    rankButton: cc.Node = null;
-
-    @property(cc.Node)
     tutorialButton: cc.Node = null;
 
     @property(cc.Node)
@@ -67,6 +64,7 @@ export default class NewClass extends cc.Component {
         this.rankBoard.active = false;
         this.matchScreen();
         this.onlineController = cc.find('onlineController');
+        this.onlineController.getComponent('rank').getRank();
         gameStatus.status = 'start'
         gameStatus.online = false;
         this.audioBg.volume = gameStatus.audioBgVolume;
@@ -142,16 +140,6 @@ export default class NewClass extends cc.Component {
 
     public cancellMatching() {
         this.onlineController.getComponent('onlineControl').cancellMatching();
-    }
-
-    public showRank() {
-        if (!gameStatus.online) {
-            cc.find('Canvas/rank').active = true;
-        }
-    }
-
-    public hideRank() {
-        cc.find('Canvas/rank').active = false;
     }
 
     // update (dt) {}

@@ -9,9 +9,10 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 const { ccclass, property } = cc._decorator;
+let gameStatus = require('../gameStatus');
 
 @ccclass
-export default class rank extends cc.Component {
+export default class NewClass extends cc.Component {
 
     @property(cc.Label)
     label: cc.Label = null;
@@ -19,52 +20,46 @@ export default class rank extends cc.Component {
     @property
     text: string = 'hello';
 
+    @property(cc.Node)
+    backButton: cc.Node = null;
+
+    @property(cc.Node)
+    upButton: cc.Node = null;
+
+    @property(cc.Node)
+    downButton: cc.Node = null;
+
+    @property
+    rankController: cc.Node = null;
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    onLoad() {
+        
+    }
 
     start() {
-    }
-
-
-
-    public submitScore(myScore: number) {
-        window.wx.postMessage({
-            requestType: 'submit',
-            dataType: 'score',
-            score: myScore,
-        });
-    }
-
-    public getRank() {
-        window.wx.postMessage({
-            requestType: 'getrank',
-            dataType: 'score',
-        });
+        this.rankController = cc.find('onlineController');
     }
 
     public showRank() {
-        window.wx.postMessage({
-            requestType: 'showrank',
-        });
+        this.rankController = cc.find('onlineController');
+        if (!gameStatus.online) {
+            this.rankController.getComponent('rank').showRank();
+            this.node.active = true;
+        }
     }
 
     public hideRank() {
-        window.wx.postMessage({
-            requestType: 'hiderank',
-        });
-    }
-
-    public pageUp() {
-        window.wx.postMessage({
-            requestType: 'up',
-        });
+        this.node.active = false;
+        this.rankController.getComponent('rank').hideRank();
     }
 
     public pageDown() {
-        window.wx.postMessage({
-            requestType: 'down',
-        });
+        this.rankController.getComponent('rank').pageDown();
+    }
+
+    public pageUp() {
+        this.rankController.getComponent('rank').pageUp();
     }
 
     // update (dt) {}
