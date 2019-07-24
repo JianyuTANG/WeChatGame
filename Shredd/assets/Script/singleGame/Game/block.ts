@@ -12,8 +12,6 @@ const { ccclass, property } = cc._decorator;
 
 var gameStatus = require('../../gameStatus')
 
-import { Shake } from './shake';
-
 @ccclass
 export default class Block extends cc.Component {
 
@@ -53,11 +51,14 @@ export default class Block extends cc.Component {
             var newShine=cc.instantiate(this.bonusShine)
             cc.find('Canvas').addChild(newShine)
         } else {
+            //播放撞击音效
             this.audioCollision.play()
+            //将分数写入全局
             let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 2;
             if (score > 0) {
                 gameStatus.score = score;
             }
+            //修改游戏状态为结束，触发结束效果：先暂停，后抖动，再加载结束界面
             gameStatus.status = 'over'
             this.node.dispatchEvent(new cc.Event.EventCustom('setPause', true));
         }
@@ -66,6 +67,7 @@ export default class Block extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        //调整背景音乐和音效音量
         this.audioCollision.volume = gameStatus.audioEffectVolume;
         this.audioTap.volume = gameStatus.audioEffectVolume;
     }

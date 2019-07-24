@@ -23,7 +23,6 @@ export default class NewClass extends cc.Component {
 
     onLoad () {
         cc.director.getPhysicsManager().enabled=true;
-        //cc.director.getCollisionManager().enabled=true;
     }
 
     start () {

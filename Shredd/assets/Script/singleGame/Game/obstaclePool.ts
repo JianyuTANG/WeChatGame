@@ -34,19 +34,20 @@ export default class NewClass extends cc.Component {
 
     counter: number = 0;
     //障碍物生成速度，单位/秒
-    shiftSpeed: number = 1.2;
+    shiftSpeed: number = 1.1;
 
     //障碍物随机生成类型
     obstacleTypeList: Array<number> = [0, 1, 2, 3, 2, 0, 1, 3, 2, 1,
         2, 0, 2, 3, 1, 2, 0, 1, 3, 0,
         1, 1, 2, 0, 1, 3, 0, 3, 2, 0,
         0, 1, 3, 2, 1, 2, 0, 1, 3, 3,
-        3, 1, 2, 0, 2, 3, 1, 0, 2, 1]
+        3, 1, 2, 0, 2, 3, 1, 0, 2, 1,
+        2, 3, 1, 0, 1, 0, 2, 3, 1, 2]
 
     blockNum: number = 0
 
     //障碍物靠左的横坐标
-    leftX: number = 110 - cc.winSize.width / 2  //参数90设置很迷幻
+    leftX: number = 110 - cc.winSize.width / 2  //参数110设置很迷幻
 
     //障碍物靠右的横坐标
     rightX: number = cc.winSize.width / 2 - 110
@@ -58,23 +59,19 @@ export default class NewClass extends cc.Component {
 
     level: number = 0;
 
+    startSpeed=380
+
 
     spawnNewObstacle() {
         //根据提前生成的列表，生成一个障碍物节点
-        var type = this.obstacleTypeList[this.blockNum % 50];
+        var type = this.obstacleTypeList[this.blockNum % 60];
         let newObstacle = cc.instantiate(this.obstaclePrefab[type]);
         this.node.addChild(newObstacle);
         newObstacle.setPosition(this.getPosition(newObstacle, type));
         newObstacle.getComponent(cc.RigidBody).linearVelocity = this.getPace();
         this.blockNum++
         if (this.blockNum > 2) {
-            /* if(this.blockNum%5===1){
-                 this.blockNum++;
-             }*/
             this.label.getComponent(cc.Label).string = (this.blockNum - 2).toString();
-            /* if(this.blockNum%5===2){
-                 this.blockNum--;
-             }*/
         }
 
     }
@@ -94,44 +91,38 @@ export default class NewClass extends cc.Component {
     getPosition(newObstacle: cc.Node, type) {
         if (type === 0) {
             //left
-           // newObstacle.width=0.8*cc.winSize.width;
             return cc.v2(this.leftX, this.initY)
         } else if (type === 1) {
             //right
             return cc.v2(this.rightX, this.initY)
         } else if (type === 2) {
-           // newObstacle.width=4/5*cc.winSize.width;
+            //middle
             return cc.v2(0, this.initY)
         } else {
             //hollow
-            //newObstacle.getComponent("hollowObstacle").si
-          //  newObstacle.width=cc.winSize.width;
             return cc.v2(0, this.initY)
         }
     }
 
     removeUnusedObstacle() {
-        for (let i in this.node.children) {
-            if (this.node.children[i].y < -400) {
-                //console.log("remove once")
-                this.node.children[i].destroy();
-                break;
-            }
+        //每帧只移除一个
+        if (this.node.children[0].y < -400) {
+            this.node.children[0].destroy();
         }
     }
 
     setPause() {
-        for (let i in this.node.children) {
+        this.node.children.forEach(element=> {
             //使所有障碍物静止
-            this.node.children[i].getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
-        }
+            element.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
+        })
     }
 
     backToLife() {
-        for (let i in this.node.children) {
-            //使所有障碍物静止
-            this.node.children[i].getComponent(cc.RigidBody).linearVelocity = this.getPace();
-        }
+       this.node.children.forEach(element=> {
+            //使所有障碍物恢复原速度
+            element.getComponent(cc.RigidBody).linearVelocity = this.getPace();
+        })
     }
 
     getPace() {
@@ -141,7 +132,7 @@ export default class NewClass extends cc.Component {
     levelUp() {
         this.level++;
         //控制障碍物间隔不变 
-        this.shiftSpeed = 1.2 * 320 / (340 + this.level * 40)
+        this.shiftSpeed = 1.1 * this.startSpeed / (this.startSpeed + this.level * 30)
     }
 
     // LIFE-CYCLE CALLBACKS:
@@ -169,7 +160,7 @@ export default class NewClass extends cc.Component {
     }
 
     start() {
-        //每1秒生成一个新节点
+        //每1.1秒生成一个新节点
         this.schedule(this.callback, this.shiftSpeed)
     }
 

@@ -103,9 +103,6 @@ export default class Control extends cc.Component {
 
         //调整背景音乐音量
         this.audioBg.volume = gameStatus.auidoBgVolume;
-
-        var ratioWidth = cc.winSize.width / 750;
-        var ratioHeight = cc.winSize.height / 1334
     }
 
     start() {
@@ -188,6 +185,5 @@ export default class Control extends cc.Component {
 
 
 
-    update(dt) {
-    }
+    //update(dt) {}
 }

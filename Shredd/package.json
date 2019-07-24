@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "eslint": "eslint Start.ts"
+  },
+  "devDependencies": {
+    "typescript": "^3.5.3",
+    "typescript-eslint-parser": "^22.0.0"
+  }
+}

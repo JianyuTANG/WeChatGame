@@ -41,6 +41,7 @@ export default class NewClass extends cc.Component {
     ratioHeight: number = cc.winSize.height / 1334;
 
     back() {
+        //返回相应原界面
         if (gameStatus.status === 'over') {
             cc.director.loadScene('Over')
         } else if (gameStatus.status === 'start') {
@@ -52,7 +53,7 @@ export default class NewClass extends cc.Component {
         //修改背景适配大小
         this.matchScreen();
 
-        //读取默认背景和音效音量
+        //读取默认背景音乐和音效音量
         this.bgSlider.getComponent(cc.Slider).progress = gameStatus.audioBgVolume;
         this._updateBackgroundVolume(this.bgSlider.getComponent(cc.Slider).progress);
 
@@ -84,24 +85,19 @@ export default class NewClass extends cc.Component {
     }
 
     _updateEffectVolume(progress){
-        //this.music.volume = progress;
         gameStatus.audioEffectVolume = progress;
     }
 
     onBgSliderEvent (sender, eventType) {
         this._updateBackgroundVolume(sender.progress);
-        console.log(sender.progress);
     }
 
     
     onEffectSliderEvent (sender, eventType) {
         this._updateEffectVolume(sender.progress);
-        console.log(sender.progress);
     }
 
-    start() {
-
-    }
+    //start() {}
 
     // update (dt) {}
 }

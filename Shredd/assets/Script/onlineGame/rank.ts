@@ -23,10 +23,7 @@ export default class rank extends cc.Component {
 
     // onLoad () {}
 
-    start() {
-    }
-
-
+    start() {}
 
     public submitScore(myScore: number) {
         window.wx.postMessage({

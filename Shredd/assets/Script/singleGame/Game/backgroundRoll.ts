@@ -29,9 +29,9 @@ export default class NewClass extends cc.Component {
 
     bgMove(bgList, speed) {
         //每次循环二张图片一起滚动
-        for (var index = 0; index < bgList.length; index++) {
-            bgList[index].y -= speed;
-        }
+        bgList.forEach(element => {
+            element.y -= speed;
+        })
 
         //y坐标减去自身的height得到这张背景刚好完全离开场景时的y值
         if (bgList[0].y <= 10 - bgList[0].height) {
@@ -46,13 +46,7 @@ export default class NewClass extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad() {
-        // this.far_bg.push(cc.find("Canvas/background"));
-        //  this.far_bg.push(cc.find("Canvas/backgroundForRoll"))
-        for (let i in this.far_bg) {
-            //this.far_bg[i].width = cc.winSize.width;
-        }
-    }
+    //onLoad() {}
 
     //start() {}
 
