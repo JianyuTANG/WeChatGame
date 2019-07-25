@@ -25,7 +25,7 @@ export default class Block extends cc.Component {
     duration: number = 0.2;
 
     //@property
-    moveDistance: number = Math.floor((cc.winSize.width / 2) - 40);
+    moveDistance: number = Math.floor((cc.winSize.width / 2) - 33);
 
     @property(cc.Node)
     obstacleNode: cc.Node = null

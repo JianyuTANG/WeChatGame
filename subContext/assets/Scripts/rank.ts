@@ -165,6 +165,17 @@ export default class item extends cc.Component {
         node.x = 0;
         node.getChildByName('position').getComponent(cc.Label).string = (position + 1) + '';//名次
         node.getChildByName('name').getComponent(cc.Label).string = data.nickName || data.nickname;//昵称
+        switch (position) {
+            case 0:
+                node.getChildByName('name').color = cc.color(255, 0, 0, 255);
+                break;
+            case 1:
+                node.getChildByName('name').color = cc.color(255, 255, 0, 255);
+                break;
+            case 2:
+                node.getChildByName('name').color = cc.color(255, 255, 0, 255);
+                break;
+        }
         node.getChildByName('score').getComponent(cc.Label).string = '0';
         if (data.KVDataList.length > 0) {
             node.getChildByName('score').getComponent(cc.Label).string = data.KVDataList[0].value + '';//分数

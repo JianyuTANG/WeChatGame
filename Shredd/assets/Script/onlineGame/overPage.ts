@@ -51,13 +51,13 @@ export default class NewClass extends cc.Component {
 
     onLoad() {
         this.matchScreen();
-        this.onlineController = cc.find('onlineController').getComponent('onlineControl');
+        this.onlineController = cc.find('onlineController');
         cc.find('onlineController').getComponent('rank').submitScore();
         this.onlineController.gameOver();
         this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
-        if (this.onlineController.connectionStatus === 2) {
+        if (this.onlineController.getComponent('onlineControl').connectionStatus === 2) {
             this.showMatchResult();
-            this.onlineController.connectionStatus = 0;
+            this.onlineController.getComponent('onlineControl').connectionStatus = 0;
         }
         else {
             this.waiting.active = true;
@@ -111,17 +111,17 @@ export default class NewClass extends cc.Component {
 
     private showMatchResult() {
         this.waiting.active = false;
-        if (this.onlineController.rivalScore > gameStatus.score) {
+        if (this.onlineController.getComponent('onlineControl').rivalScore > gameStatus.score) {
             this.lose.active = true;
         }
-        else if (this.onlineController.rivalScore < gameStatus.score) {
+        else if (this.onlineController.getComponent('onlineControl').rivalScore < gameStatus.score) {
             this.win.active = true;
         }
         else {
             this.deuce.active = true;
         }
         //this.selfScore.getComponent(cc.Label).string=gameStatus.score.toString();
-        this.rivalScore.getComponent(cc.Label).string = this.onlineController.rivalScore.toString();
+        this.rivalScore.getComponent(cc.Label).string = this.onlineController.getComponent('onlineControl').rivalScore.toString();
     }
 
     public goBack() {
@@ -130,9 +130,9 @@ export default class NewClass extends cc.Component {
     }
 
     update(dt) {
-        if (this.onlineController.connectionStatus === 2) {
+        if (this.onlineController.getComponent('onlineControl').connectionStatus === 2) {
             this.showMatchResult();
-            this.onlineController.connectionStatus = 0;
+            this.onlineController.getComponent('onlineControl').connectionStatus = 0;
         }
     }
 }

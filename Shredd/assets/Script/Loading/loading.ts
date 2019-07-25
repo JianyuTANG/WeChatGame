@@ -26,6 +26,9 @@ export default class NewClass extends cc.Component {
 
     onLoad() {
         this.matchScreen();
+        wx.setEnableDebug({
+            enableDebug: true
+        });
         //分包加载
     }
 
@@ -36,6 +39,7 @@ export default class NewClass extends cc.Component {
 
     start() {
         this.loadPackage();
+        //cc.game.setFrameRate(30);
     }
 
     private loadPackage() {

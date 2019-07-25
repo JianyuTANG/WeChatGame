@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.2736275337687493,
-      "y": 0.2736275337687493,
+      "x": 0.43220001220703125,
+      "y": 0.43220001220703125,
       "z": 1
     },
     "_quat": {
@@ -69,16 +69,19 @@
       },
       {
         "__id__": 5
+      },
+      {
+        "__id__": 7
       }
     ],
     "_active": true,
     "_level": 0,
     "_components": [
       {
-        "__id__": 7
+        "__id__": 9
       },
       {
-        "__id__": 8
+        "__id__": 10
       }
     ],
     "_prefab": null,
@@ -297,6 +300,91 @@
     "_id": "89pMkmSUNGjpzgenjOxOxw"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "label",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 1,
+    "_components": [
+      {
+        "__id__": 8
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 32,
+      "g": 10,
+      "b": 145,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 213.38,
+      "height": 40
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "groupIndex": 0,
+    "_id": "7fp3WmkgdEuYfi3/hUizRO"
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 7
+    },
+    "_enabled": true,
+    "_useOriginalSize": false,
+    "_string": "LOADING...",
+    "_N$string": "LOADING...",
+    "_fontSize": 40,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": null,
+    "_isSystemFontUsed": true,
+    "_spacingX": 0,
+    "_batchAsBitmap": false,
+    "_N$horizontalAlign": 1,
+    "_N$verticalAlign": 1,
+    "_N$fontFamily": "Arial",
+    "_N$overflow": 0,
+    "_N$cacheMode": 0,
+    "_id": "41ox+FBQlN2IDKvTyBZn/n"
+  },
+  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -327,7 +415,7 @@
       "__uuid__": "efeedba5-3673-4c2f-bf7b-32330dbe5fe6"
     },
     "pageItem": {
-      "__uuid__": "3ba25b6d-0331-46e6-afe1-d0abf97daca2"
+      "__uuid__": "6ed14b8f-7ed5-42a5-bdde-cad48da7b06e"
     },
     "content": null,
     "pages": null,

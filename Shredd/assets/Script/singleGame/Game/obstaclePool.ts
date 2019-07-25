@@ -47,10 +47,12 @@ export default class NewClass extends cc.Component {
     blockNum: number = 0
 
     //障碍物靠左的横坐标
-    leftX: number = 110 - cc.winSize.width / 2  //参数110设置很迷幻
+    //leftX: number = 110 - cc.winSize.width / 2;  //参数110设置很迷幻
+    leftX: number = -56;
 
     //障碍物靠右的横坐标
-    rightX: number = cc.winSize.width / 2 - 110
+    //rightX: number = cc.winSize.width / 2 - 110;
+    rightX: number = 56;
 
     //障碍物的初始高度
     initY: number = cc.winSize.height / 2 + 280;
@@ -64,7 +66,7 @@ export default class NewClass extends cc.Component {
 
     spawnNewObstacle() {
         //根据提前生成的列表，生成一个障碍物节点
-        var type = this.obstacleTypeList[this.blockNum % 60];
+        var type = Math.floor(Math.random() * 4);
         let newObstacle = cc.instantiate(this.obstaclePrefab[type]);
         this.node.addChild(newObstacle);
         newObstacle.setPosition(this.getPosition(newObstacle, type));

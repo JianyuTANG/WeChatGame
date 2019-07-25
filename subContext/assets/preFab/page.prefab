@@ -114,7 +114,7 @@
       "width": 300,
       "height": 500
     },
-    "_resize": 1,
+    "_resize": 0,
     "_N$layoutType": 2,
     "_N$padding": 0,
     "_N$cellSize": {
@@ -142,7 +142,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "55qpa6H1RDj5Ewfo0uT/+l",
+    "fileId": "a5I5fExAdN8LASDFwyAFl7",
     "sync": false
   }
 ]

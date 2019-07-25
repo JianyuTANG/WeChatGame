@@ -129,6 +129,7 @@ export default class NewClass extends cc.Component {
             this.connectBoardLabel.getComponent(cc.Label).string = '即将开始!';
             gameStatus.online = true;
             cc.director.loadScene('Game');
+            gameStatus.status = 'on';
         });
         this.roomIo.on('end', data => {
             if (this.playerNum === 0) {
