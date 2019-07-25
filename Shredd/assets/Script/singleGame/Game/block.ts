@@ -25,7 +25,7 @@ export default class Block extends cc.Component {
     duration: number = 0.2;
 
     //@property
-    moveDistance: number = Math.floor((cc.winSize.width / 2) - 33);
+    moveDistance: number = Math.floor((cc.winSize.width / 2) - 39);
 
     @property(cc.Node)
     obstacleNode: cc.Node = null
@@ -70,9 +70,16 @@ export default class Block extends cc.Component {
         //调整背景音乐和音效音量
         this.audioCollision.volume = gameStatus.audioEffectVolume;
         this.audioTap.volume = gameStatus.audioEffectVolume;
+        this.screenMatch();
     }
 
     start() {
+    }
+
+    private screenMatch(){
+        if(cc.winSize.width<361){
+            this.moveDistance = Math.floor((cc.winSize.width / 2) - 30);
+        }
     }
 
     public moveRight() {

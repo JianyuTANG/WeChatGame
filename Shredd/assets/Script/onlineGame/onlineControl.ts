@@ -79,11 +79,6 @@ export default class NewClass extends cc.Component {
 
     public gameOver() {
         this.roomIo.emit('gameEnd', { 'point': gameStatus.score });
-        /*
-        this.roomIo.on('status', data => {
-            this.connectionStatus = data.status;
-        })
-        */
     }
 
     private init() {
@@ -119,7 +114,7 @@ export default class NewClass extends cc.Component {
         this.roomIo.on('playerNum', data => {
             this.playerNum = data.num;
             if (this.playerNum === 0) {
-                this.connectBoardLabel.getComponent(cc.Label).string = '正在匹配旗鼓相当的对手!';
+                this.connectBoardLabel.getComponent(cc.Label).string = '正在匹配!';
             }
             else {
                 this.connectBoardLabel.getComponent(cc.Label).string = '即将开始!';

@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.33765625953674316,
+      "y": 0.33765625953674316,
       "z": 1
     },
     "_quat": {
@@ -1223,11 +1223,21 @@
     "_enabled": true,
     "label": null,
     "text": "hello",
-    "bg": null,
-    "win": null,
-    "lose": null,
-    "waiting": null,
-    "deuce": null,
+    "bg": {
+      "__id__": 5
+    },
+    "win": {
+      "__id__": 7
+    },
+    "lose": {
+      "__id__": 13
+    },
+    "waiting": {
+      "__id__": 11
+    },
+    "deuce": {
+      "__id__": 9
+    },
     "selfScore": null,
     "rivalScore": null,
     "button": null,

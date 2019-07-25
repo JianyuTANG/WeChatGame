@@ -44,17 +44,20 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     button: cc.Node = null;
 
-    @property
-    onlineController = null;
+    @property(cc.Node)
+    onlineController: cc.Node = null;
+
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
         this.matchScreen();
         this.onlineController = cc.find('onlineController');
-        cc.find('onlineController').getComponent('rank').submitScore();
-        this.onlineController.gameOver();
+        console.log(this.onlineController);
+        this.onlineController.getComponent('rank').submitScore();
+        this.onlineController.getComponent('onlineControl').gameOver();
         this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
+        console.log(666777);
         if (this.onlineController.getComponent('onlineControl').connectionStatus === 2) {
             this.showMatchResult();
             this.onlineController.getComponent('onlineControl').connectionStatus = 0;
@@ -65,9 +68,6 @@ export default class NewClass extends cc.Component {
     }
 
     start() {
-        // this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
-
-
     }
 
     private matchScreen() { //屏幕适配
@@ -131,8 +131,8 @@ export default class NewClass extends cc.Component {
 
     update(dt) {
         if (this.onlineController.getComponent('onlineControl').connectionStatus === 2) {
-            this.showMatchResult();
             this.onlineController.getComponent('onlineControl').connectionStatus = 0;
+            this.showMatchResult();
         }
     }
 }
