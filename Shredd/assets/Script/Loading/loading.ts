@@ -39,7 +39,6 @@ export default class NewClass extends cc.Component {
 
     start() {
         this.loadPackage();
-        //cc.game.setFrameRate(30);
     }
 
     private loadPackage() {

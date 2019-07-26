@@ -65,8 +65,6 @@ export default class NewClass extends cc.Component {
 
     currentScore = 0;
 
-    removeStatus = 0;
-
 
     spawnNewObstacle() {
         //根据提前生成的列表，生成一个障碍物节点
@@ -121,9 +119,8 @@ export default class NewClass extends cc.Component {
             this.label.getComponent(cc.Label).string = this.currentScore.toString();
         }
         */
-        if (this.node.children[0].y < -400) {
+        if (this.node.children[0].y < -310) {
             this.node.children[0].destroy();
-            this.removeStatus = 0;
         }
     }
 
@@ -161,12 +158,13 @@ export default class NewClass extends cc.Component {
     callback = function () {
         if (gameStatus.status === 'on') {
             if (this.blockNum % 10 === 0 && this.flag) {
-                this.levelUp();
                 this.spawnNewBonus();
+                this.removeUnusedObstacle();
                 this.flag = false;
                 this.unschedule(this.callback);
+                this.levelUp();
                 this.schedule(this.callback, this.shiftSpeed);
-                this.removeStatus = 0;
+                //this.removeStatus = 0;
             } else {
                 //生成一个障碍物节点
                 this.spawnNewObstacle();
@@ -182,15 +180,10 @@ export default class NewClass extends cc.Component {
     }
 
     update(dt) {
-        if (this.removeStatus === 0 && this.node.children[0] != null) {
-            if(this.blockNum%10===2){
-                ;//不做操作
-            }
-            else if (this.node.children[0].y < -290) {
-                this.removeStatus = 1;
-                this.currentScore++;
-                this.label.getComponent(cc.Label).string = this.currentScore.toString();
-            }
+        if (this.node.children[0].getComponent('obstacleStatus').status === 0 && this.node.children[0].y < -290) {
+            this.node.children[0].getComponent('obstacleStatus').status = 1;
+            this.currentScore++;
+            this.label.getComponent(cc.Label).string = this.currentScore.toString();
         }
     }
 }

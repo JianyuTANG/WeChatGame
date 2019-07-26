@@ -30,7 +30,10 @@ export default class NewClass extends cc.Component {
     singleButton: cc.Node = null
 
     @property(cc.Node)
-    overShift: cc.Node=null
+    backButton: cc.Node = null
+
+    @property(cc.Node)
+    overShift: cc.Node = null
 
     @property(cc.Node)
     multiPlayerButton: cc.Node = null
@@ -43,32 +46,32 @@ export default class NewClass extends cc.Component {
 
     @property(cc.Node)
     settingButton: cc.Node = null
-    
+
     @property(cc.AudioSource)
     audioBg: cc.AudioSource = null
 
     // LIFE-CYCLE CALLBACKS:
 
-    counter=0;
+    counter = 0;
 
     onLoad() {
         cc.find('onlineController').getComponent('rank').submitScore(gameStatus.score);
         cc.find('onlineController').getComponent('rank').getRank();
         this.matchScreen();
-        this.rankBoard.active=false;
+        this.rankBoard.active = false;
         this.label.getComponent(cc.Label).string = gameStatus.score.toString();
 
-        this.audioBg.volume=gameStatus.audioBgVolume;
+        this.audioBg.volume = gameStatus.audioBgVolume;
     }
 
     start() {
-        this.audioBg.volume=gameStatus.audioBgVolume;
+        this.audioBg.volume = gameStatus.audioBgVolume;
     }
 
-    private matchScreen(){
+    private matchScreen() {
         const ratioWidth = cc.winSize.width / 750;
         const ratioHeight = cc.winSize.height / 1334;
-        this.background = cc.find('Canvas/overPage');
+        this.background = cc.find('Canvas/bg');
         this.background.width = cc.winSize.width;
         this.background.height = cc.winSize.height;
 
@@ -92,51 +95,61 @@ export default class NewClass extends cc.Component {
         this.singleButton.x = -6 * ratioWidth;
         this.singleButton.y = 387 * ratioHeight;
 
-        this.multiPlayerButton=cc.find('Canvas/multiPlayerButton');
-        this.multiPlayerButton.width=335*ratioWidth;
+        this.multiPlayerButton = cc.find('Canvas/multiPlayerButton');
+        this.multiPlayerButton.width = 335 * ratioWidth;
         this.multiPlayerButton.height = 210 * ratioHeight;
         this.multiPlayerButton.x = -125 * ratioWidth;
         this.multiPlayerButton.y = -387 * ratioHeight;
 
-        this.rankButton=cc.find('Canvas/rankButton');
-        this.rankButton.width=100*ratioWidth;
+        this.rankButton = cc.find('Canvas/rankButton');
+        this.rankButton.width = 100 * ratioWidth;
         this.rankButton.height = 100 * ratioHeight;
         this.rankButton.x = 86 * ratioWidth;
         this.rankButton.y = 20 * ratioHeight;
 
-        this.settingButton=cc.find('Canvas/settingButton');
-        this.settingButton.width=100*ratioWidth;
+        this.settingButton = cc.find('Canvas/settingButton');
+        this.settingButton.width = 100 * ratioWidth;
         this.settingButton.height = 100 * ratioHeight;
         this.settingButton.x = 230 * ratioWidth;
         this.settingButton.y = 20 * ratioHeight;
+
+        this.backButton.width = 280 * ratioWidth;
+        this.backButton.height = 100 * ratioHeight;
+        this.backButton.x = 158 * ratioWidth;
+        this.backButton.y = -100 * ratioHeight;
     }
-/*
-    update(dt) {
-        if (this.counter % 100 === 0) {
-            cc.loader.loadRes("overPage/tryAgain", cc.SpriteFrame, function (err, spriteFrame) {
-                cc.find('Canvas/playButton').getComponent(cc.Button).normalSprite = spriteFrame;
-            })
-        } else if (this.counter % 100 === 5) {
-            cc.loader.loadRes("overPage/tryAgainCopy", cc.SpriteFrame, function (err, spriteFrame) {
-                //this.singleButton.getComponent("playButton").normalSprite = spriteFrame;
-            })
+    /*
+        update(dt) {
+            if (this.counter % 100 === 0) {
+                cc.loader.loadRes("overPage/tryAgain", cc.SpriteFrame, function (err, spriteFrame) {
+                    cc.find('Canvas/playButton').getComponent(cc.Button).normalSprite = spriteFrame;
+                })
+            } else if (this.counter % 100 === 5) {
+                cc.loader.loadRes("overPage/tryAgainCopy", cc.SpriteFrame, function (err, spriteFrame) {
+                    //this.singleButton.getComponent("playButton").normalSprite = spriteFrame;
+                })
+            }
+            this.counter++;  //做不出频闪qaq
         }
-        this.counter++;  //做不出频闪qaq
-    }
-    */
+        */
 
     public gameStart() {
         cc.director.loadScene('Game');
-        gameStatus.status='on';
+        gameStatus.status = 'on';
     }
 
-    public startOnline(){
-        gameStatus.startOnlineFromOverpage=true;
+    public backHome() {
+        gameStatus.status = 'start';
         cc.director.loadScene('Start');
-        //cc.find('onlineController').getComponent('onlineControl').startOnlineFromOverpage();
     }
 
-    toSetting(){
+    public startOnline() {
+        gameStatus.startOnlineFromOverpage = true;
+        gameStatus.status = 'start';
+        cc.director.loadScene('Start');
+    }
+
+    toSetting() {
         cc.director.loadScene('Setting');
     }
 }

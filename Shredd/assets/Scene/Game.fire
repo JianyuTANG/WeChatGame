@@ -524,20 +524,20 @@
     "text": "hello",
     "obstaclePrefab": [
       {
-        "__uuid__": "9b6f6bc3-8488-4942-b07d-ff7dbbc6e4f7"
+        "__uuid__": "58cf6bac-75db-4fca-b265-f38603ba00cf"
       },
       {
-        "__uuid__": "5d4bf243-b40d-4522-a63d-a6a30a340277"
+        "__uuid__": "7470ace6-5a4e-435c-a000-e19f8c92cc21"
       },
       {
-        "__uuid__": "1daa149e-1a4a-4f2f-92f6-154b64d005eb"
+        "__uuid__": "cf89c806-732f-44da-a7fd-b56fe59ddf61"
       },
       {
-        "__uuid__": "4b54fd5f-4623-46ad-a6ed-a4be91193eda"
+        "__uuid__": "5b6e2f5f-8f16-4278-8337-a8bcf6fecb68"
       }
     ],
     "bonusPrefab": {
-      "__uuid__": "89a69e8e-518a-41c9-9999-4286cb2bf34b"
+      "__uuid__": "c756d653-8d9b-45fc-8ea4-838ddbf3ef74"
     },
     "background": {
       "__id__": 5
@@ -2413,7 +2413,7 @@
     "_texture": {
       "__uuid__": "30a1630d-113d-402e-9dcc-7bd5a2cb9d0e"
     },
-    "_stopped": false,
+    "_stopped": true,
     "playOnLoad": true,
     "autoRemoveOnFinish": true,
     "totalParticles": 150,
