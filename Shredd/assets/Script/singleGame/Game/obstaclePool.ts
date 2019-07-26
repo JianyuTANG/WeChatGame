@@ -164,7 +164,6 @@ export default class NewClass extends cc.Component {
                 this.unschedule(this.callback);
                 this.levelUp();
                 this.schedule(this.callback, this.shiftSpeed);
-                //this.removeStatus = 0;
             } else {
                 //生成一个障碍物节点
                 this.spawnNewObstacle();

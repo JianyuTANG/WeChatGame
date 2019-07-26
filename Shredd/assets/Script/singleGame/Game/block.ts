@@ -77,7 +77,7 @@ export default class Block extends cc.Component {
     }
 
     private screenMatch(){
-        if(cc.winSize.width<361){
+        if(cc.winSize.width<320){
             this.moveDistance = Math.floor((cc.winSize.width / 2) - 23);
         }
     }
