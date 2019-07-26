@@ -61,7 +61,11 @@ export default class NewClass extends cc.Component {
 
     level: number = 0;
 
-    startSpeed=380
+    startSpeed = 380
+
+    currentScore = 0;
+
+    removeStatus = 0;
 
 
     spawnNewObstacle() {
@@ -71,23 +75,26 @@ export default class NewClass extends cc.Component {
         this.node.addChild(newObstacle);
         newObstacle.setPosition(this.getPosition(newObstacle, type));
         newObstacle.getComponent(cc.RigidBody).linearVelocity = this.getPace();
-        this.blockNum++
+        this.blockNum++;
+        /*
         if (this.blockNum > 2) {
             this.label.getComponent(cc.Label).string = (this.blockNum - 2).toString();
         }
-
+        */
     }
 
     spawnNewBonus() {
         let newBonus = cc.instantiate(this.bonusPrefab);
-        this.node.addChild(newBonus);  
+        this.node.addChild(newBonus);
         newBonus.getComponent(cc.RigidBody).linearVelocity = this.getPace();
         newBonus.setPosition(0, this.initY);
+        /*
         this.blockNum++;
         if (this.blockNum > 2) {
             this.label.getComponent(cc.Label).string = (this.blockNum - 2).toString();
         }
         this.blockNum--;
+        */
     }
 
     getPosition(newObstacle: cc.Node, type) {
@@ -108,20 +115,27 @@ export default class NewClass extends cc.Component {
 
     removeUnusedObstacle() {
         //每帧只移除一个
+        /*
+        if (this.node.children[0].y < -220) {
+            this.currentScore++;
+            this.label.getComponent(cc.Label).string = this.currentScore.toString();
+        }
+        */
         if (this.node.children[0].y < -400) {
             this.node.children[0].destroy();
+            this.removeStatus = 0;
         }
     }
 
     setPause() {
-        this.node.children.forEach(element=> {
+        this.node.children.forEach(element => {
             //使所有障碍物静止
             element.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
         })
     }
 
     backToLife() {
-       this.node.children.forEach(element=> {
+        this.node.children.forEach(element => {
             //使所有障碍物恢复原速度
             element.getComponent(cc.RigidBody).linearVelocity = this.getPace();
         })
@@ -134,7 +148,7 @@ export default class NewClass extends cc.Component {
     levelUp() {
         this.level++;
         //控制障碍物间隔不变 
-        this.shiftSpeed = 1.1 * this.startSpeed / (this.startSpeed + this.level * 30)
+        this.shiftSpeed = 1.1 * this.startSpeed / (this.startSpeed + this.level * 30);
     }
 
     // LIFE-CYCLE CALLBACKS:
@@ -144,14 +158,15 @@ export default class NewClass extends cc.Component {
         this.spawnNewObstacle();
     }
 
-    callback=function () {
+    callback = function () {
         if (gameStatus.status === 'on') {
             if (this.blockNum % 10 === 0 && this.flag) {
-                this.levelUp();                
+                this.levelUp();
                 this.spawnNewBonus();
                 this.flag = false;
-                this.unschedule(this.callback)
-                this.schedule(this.callback,this.shiftSpeed)
+                this.unschedule(this.callback);
+                this.schedule(this.callback, this.shiftSpeed);
+                this.removeStatus = 0;
             } else {
                 //生成一个障碍物节点
                 this.spawnNewObstacle();
@@ -166,5 +181,16 @@ export default class NewClass extends cc.Component {
         this.schedule(this.callback, this.shiftSpeed)
     }
 
-    //update(dt) {}
+    update(dt) {
+        if (this.removeStatus === 0 && this.node.children[0] != null) {
+            if(this.blockNum%10===2){
+                ;//不做操作
+            }
+            else if (this.node.children[0].y < -290) {
+                this.removeStatus = 1;
+                this.currentScore++;
+                this.label.getComponent(cc.Label).string = this.currentScore.toString();
+            }
+        }
+    }
 }

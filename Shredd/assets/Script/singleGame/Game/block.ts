@@ -54,10 +54,10 @@ export default class Block extends cc.Component {
             //播放撞击音效
             this.audioCollision.play()
             //将分数写入全局
-            let score = this.obstacleNode.getComponent("obstaclePool").blockNum - 2;
-            if (score > 0) {
-                gameStatus.score = score;
-            }
+            //let score = this.obstacleNode.getComponent("obstaclePool").currentScore;
+            //if (score > 0) {
+            gameStatus.score = this.obstacleNode.getComponent("obstaclePool").currentScore;
+            //}
             //修改游戏状态为结束，触发结束效果：先暂停，后抖动，再加载结束界面
             gameStatus.status = 'over'
             this.node.dispatchEvent(new cc.Event.EventCustom('setPause', true));
@@ -78,7 +78,7 @@ export default class Block extends cc.Component {
 
     private screenMatch(){
         if(cc.winSize.width<361){
-            this.moveDistance = Math.floor((cc.winSize.width / 2) - 30);
+            this.moveDistance = Math.floor((cc.winSize.width / 2) - 23);
         }
     }
 

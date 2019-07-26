@@ -81,6 +81,15 @@ export default class NewClass extends cc.Component {
         this.roomIo.emit('gameEnd', { 'point': gameStatus.score });
     }
 
+    public gainPoint(){
+        if(this.playerNum===0){
+            this.roomIo.emit('gainpoint0');
+        }
+        else{
+            this.roomIo.emit('gainpoint1');
+        }
+    }
+
     private init() {
         this.queueIo = null;
         this.roomIo = null;
@@ -101,8 +110,8 @@ export default class NewClass extends cc.Component {
         });
         this.queueIo.on('reject', () => {
             this.connectionStatus = -1;
-            alert('服务器已满，请等候一会儿再进入！');
-            this.connectBoard.active = false;
+            this.connectBoardLabel.getComponent(cc.Label).string = '服务器已满';
+            //this.connectBoard.active = false;
             this.queueIo.disconnect();
         });
     }
@@ -134,8 +143,10 @@ export default class NewClass extends cc.Component {
                 this.rivalScore = data.playerA;
             }
             this.connectionStatus = 2;
+            console.log('ENDED');
             this.roomIo.disconnect();
         });
+        this.roomIo.on('keepconnection');
     }
 
     // update (dt) {}

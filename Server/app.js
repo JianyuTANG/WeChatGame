@@ -70,6 +70,7 @@ for (let i = 0; i < MAX; i++) {
     rooms[i].socket = io.of(`/room${i}`);
     rooms[i].socket.on('connection', function (socket) {
         console.log('enter room');
+        let timer=null;
         rooms[i].people++;
         if (rooms[i].people === 2) {
             rooms[i].socket.to(socket.id).emit('playerNum', { 'num': 1 });
@@ -82,6 +83,9 @@ for (let i = 0; i < MAX; i++) {
         else if (rooms[i].people === 1) {
             rooms[i].socket.to(socket.id).emit('playerNum', { 'num': 0 });
             rooms[i].firstUserId = socket.id;
+            timer = setInterval(()=>{
+                rooms[i].socket.emit('keepconnection');
+            }, 30000);
         }
         //对得分的响应（记录）
         socket.on('gainpoint1', function () {
@@ -112,6 +116,7 @@ for (let i = 0; i < MAX; i++) {
                 rooms[i].bStatus = 0;
                 rooms[i].aPoint = 0;
                 rooms[i].bPoint = 0;
+                clearInterval(timer);
             }
         });
     })

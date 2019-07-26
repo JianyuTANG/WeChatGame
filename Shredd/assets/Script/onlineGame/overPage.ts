@@ -53,14 +53,12 @@ export default class NewClass extends cc.Component {
     onLoad() {
         this.matchScreen();
         this.onlineController = cc.find('onlineController');
-        console.log(this.onlineController);
-        this.onlineController.getComponent('rank').submitScore();
+        this.onlineController.getComponent('rank').submitScore(gameStatus.score);
         this.onlineController.getComponent('onlineControl').gameOver();
         this.selfScore.getComponent(cc.Label).string = gameStatus.score.toString();
-        console.log(666777);
         if (this.onlineController.getComponent('onlineControl').connectionStatus === 2) {
-            this.showMatchResult();
             this.onlineController.getComponent('onlineControl').connectionStatus = 0;
+            this.showMatchResult();
         }
         else {
             this.waiting.active = true;
